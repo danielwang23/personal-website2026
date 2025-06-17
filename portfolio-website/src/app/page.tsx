@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import ProjectsGrid from "@/components/ProjectsGrid";
 import { Button } from "@/components/ui/button";
@@ -13,16 +13,19 @@ import {
   Mail,
   ExternalLink,
   ChevronRight,
+  DivideSquare,
 } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
 // Framer Motion 2 import statements for animations below
-import { hover, motion } from 'framer-motion';
+import { hover, motion, useInView } from 'framer-motion';
 import { faBasketball, faCamera, faGuitar, faLeaf, faCode, faTableTennisPaddleBall, faMountainSun } from '@fortawesome/free-solid-svg-icons';
+import { FaPython, FaJsSquare, FaJava, FaReact, FaNodeJs, FaGitAlt, FaDocker, FaAws, FaFigma } from 'react-icons/fa';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiDjango, SiCplusplus, SiR } from 'react-icons/si';
+import { VscVscode } from 'react-icons/vsc';
 
 function getRandomPositionAndColor(safeZone: { top: number; left: number; bottom: number; right: number }, iconSize = 48) {
   const colors = [
@@ -189,37 +192,46 @@ function FloatingIcons() {
     </div>
   );
 }
-// ----FLOATING OBJECTS CODE PART----
+
 // =================================================
-
-
+// ----TECH STACK LANGUAGES PART----
 
 export default function Home() {
+  const ref1 = useRef(null);
+  const inView1 = useInView(ref1, { once: true, amount: 0.9 });
+  const ref2 = useRef(null);
+  const inView2 = useInView(ref2, { once: true, amount: 0.9 });
+  const ref3 = useRef(null);
+  const inView3 = useInView(ref3, { once: true, amount: 0.9 });
+  const ref4 = useRef(null);
+  const inView4 = useInView(ref4, { once: true, amount: 0.9 });
   // Mock data for the portfolio
   const techStack = {
     languages: [
-      { name: "Python", icon: "🐍" },
-      { name: "JavaScript", icon: "📜" },
-      { name: "TypeScript", icon: "📘" },
-      { name: "Java", icon: "☕" },
-      { name: "C++", icon: "⚙️" },
-      { name: "R", icon: "📊" },
+      { name: "Python", icon: <FaPython color='#3572A5' /> },
+      { name: "JavaScript", icon: <FaJsSquare color='#F7DF1E' /> },
+      { name: "TypeScript", icon: <SiTypescript color='#3178C6' /> },
+      { name: "Java", icon: <FaJava color='#007396' /> },
+      { name: "C++", icon: <SiCplusplus color='#00599C' /> },
+      { name: "R", icon: <SiR color='#276DC3' /> },
     ],
     frameworks: [
-      { name: "React", icon: "⚛️" },
-      { name: "Next.js", icon: "▲" },
-      { name: "Node.js", icon: "🟢" },
-      { name: "TailwindCSS", icon: "🌊" },
-      { name: "Django", icon: "🦄" },
+      { name: "React", icon: <FaReact color='#61DAFB' /> },
+      { name: "Next.js", icon: <SiNextdotjs color='#000000' /> },
+      { name: "Node.js", icon: <FaNodeJs color='#339933' /> },
+      { name: "TailwindCSS", icon: <SiTailwindcss color='#06B6D4' /> },
+      { name: "Django", icon: <SiDjango color='#092E20' /> },
     ],
     tools: [
-      { name: "Git", icon: "📂" },
-      { name: "Docker", icon: "🐳" },
-      { name: "AWS", icon: "☁️" },
-      { name: "Figma", icon: "🎨" },
-      { name: "VS Code", icon: "💻" },
+      { name: "Git", icon: <FaGitAlt color='#F05032' /> },
+      { name: "Docker", icon: <FaDocker color='#2496ED' /> },
+      { name: "AWS", icon: <FaAws color='#FF9900' /> },
+      { name: "Figma", icon: <FaFigma color='#F24E1E' /> },
+      { name: "VS Code", icon: <VscVscode color='#007ACC' /> },
     ],
   };
+
+  // =================================================
 
   const experiences = [
     {
@@ -336,21 +348,39 @@ export default function Home() {
           <h2 className="text-3xl font-bold mb-8 text-[#13294B]">About Me</h2>
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <div className="flex-1">
-              <p className="text-lg mb-6">
+              <motion.p
+                ref={ref1}
+                initial={{ x: -100, opacity: 0 }}
+                animate={inView1 ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
+                transition={{ duration: 1.5, delay: 0.1 }}
+                className="text-lg mb-6"
+              >
                 Hi! My name is Daniel Wang and I am currently a Junior at UNC Chapel Hill 
                 double majoring in Computer Science and Data Science.
-              </p>
-              <p className="text-lg mb-6">
+              </motion.p>
+              <motion.p
+                ref={ref2}
+                initial={{ x: -100, opacity: 0 }}
+                animate={inView2 ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
+                transition={{ duration: 1.5, delay: 0.2 }}
+                className="text-lg mb-6"
+              >
                 I enjoy tackling complex problems and turning the data surrounding us into
                 actionable insights that drive impactful change. I am excited to expand on my skills in
                 leveraging ML/NLP in software development and data analytics, as well as understand 
                 financial risk management through data. 
-              </p>
-              <p className="text-lg mb-6">
+              </motion.p>
+              <motion.p
+                ref={ref3}
+                initial={{ x: -100, opacity: 0 }}
+                animate={inView3 ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
+                transition={{ duration: 1.5, delay: 0.3 }}
+                className="text-lg mb-6"
+              >
                 To me, data visualization is like photography—using the right lens and composition 
                 to transform raw data into captivating stories. In my free time, I enjoy tennis, 
                 traveling, playing guitar, photography, and social & outdoor activities. 
-              </p>
+              </motion.p>
 
               {/* Personal Interests Section */}
               <div className="mt-8">
@@ -442,7 +472,11 @@ export default function Home() {
               </div> */}
             </div>
             <div className="flex flex-col items-center md:self-start md:mt-[-2rem] md:ml-8">
-              <img
+              <motion.img
+                ref={ref4}
+                initial={{ x: 100, opacity: 0 }}
+                animate={inView4 ? { x: 0, opacity: 1 } : { x: 100, opacity: 0 }}
+                transition={{ duration: 1.5, delay: 0.1 }}
                 src="/about-img/headshotCroppedMore.jpg"
                 alt="Profile Photo"
                 className="h-64 w-64 md:h-80 md:w-80 rounded-full object-cover shadow-lg border-4 border-white mb-4"
@@ -472,15 +506,15 @@ export default function Home() {
             <h3 className="text-xl font-semibold mb-4 text-[#4B9CD3]">
               Languages
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-1">
               {techStack.languages.map((tech) => (
-                <Card
+                <div
                   key={tech.name}
-                  className="flex flex-col items-center p-4 hover:shadow-md transition-shadow"
+                  className="flex items-center flex-row p-2"
                 >
-                  <div className="text-3xl mb-2">{tech.icon}</div>
-                  <p className="font-medium">{tech.name}</p>
-                </Card>
+                  <div className="text-4xl mr-2">{tech.icon}</div>
+                  <p className="text-sm font-medium text-gray-800">{tech.name}</p>
+                </div>
               ))}
             </div>
           </div>
@@ -489,30 +523,30 @@ export default function Home() {
             <h3 className="text-xl font-semibold mb-4 text-[#4B9CD3]">
               Frameworks
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-1">
               {techStack.frameworks.map((tech) => (
-                <Card
+                <div
                   key={tech.name}
-                  className="flex flex-col items-center p-4 hover:shadow-md transition-shadow"
+                  className="flex items-center flex-row p-2 border border-gray-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-200"
                 >
-                  <div className="text-3xl mb-2">{tech.icon}</div>
-                  <p className="font-medium">{tech.name}</p>
-                </Card>
+                  <div className="text-4xl mr-2">{tech.icon}</div>
+                  <p className="text-sm font-medium text-gray-800">{tech.name}</p>
+                </div>
               ))}
             </div>
           </div>
 
           <div>
             <h3 className="text-xl font-semibold mb-4 text-[#4B9CD3]">Tools</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-1">
               {techStack.tools.map((tech) => (
-                <Card
+                <div
                   key={tech.name}
-                  className="flex flex-col items-center p-4 hover:shadow-md transition-shadow"
+                  className="flex items-center flex-row p-2 border border-gray-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-200"
                 >
-                  <div className="text-3xl mb-2">{tech.icon}</div>
-                  <p className="font-medium">{tech.name}</p>
-                </Card>
+                  <div className="text-4xl mr-2">{tech.icon}</div>
+                  <p className="text-sm font-medium text-gray-800">{tech.name}</p>
+                </div>
               ))}
             </div>
           </div>
@@ -695,7 +729,7 @@ export default function Home() {
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-              <p className="text-lg font-semibold">[Your Name]</p>
+              <p className="text-lg font-semibold">Daniel Wang</p>
               <p className="text-sm opacity-75">
                 Computer Science & Data Science @ UNC Chapel Hill
               </p>
@@ -708,7 +742,7 @@ export default function Home() {
                 className="text-white hover:bg-white/10 rounded-full"
               >
                 <Link
-                  href="https://github.com/yourusername"
+                  href="https://github.com/danielwang23"
                   target="_blank"
                   aria-label="GitHub"
                 >
@@ -722,7 +756,7 @@ export default function Home() {
                 className="text-white hover:bg-white/10 rounded-full"
               >
                 <Link
-                  href="https://linkedin.com/in/yourusername"
+                  href="https://linkedin.com/in/daniel-wang23"
                   target="_blank"
                   aria-label="LinkedIn"
                 >
@@ -735,7 +769,7 @@ export default function Home() {
                 size="icon"
                 className="text-white hover:bg-white/10 rounded-full"
               >
-                <Link href="mailto:your.email@example.com" aria-label="Email">
+                <Link href="mailto:dalbertw@ad.unc.com" target="_blank" aria-label="Email">
                   <Mail className="h-5 w-5" />
                 </Link>
               </Button>
@@ -743,7 +777,7 @@ export default function Home() {
           </div>
           <Separator className="my-6 bg-white/20" />
           <p className="text-center text-sm opacity-75">
-            © {new Date().getFullYear()} [Your Name]. All rights reserved.
+            © {new Date().getFullYear()} Daniel Wang. All rights reserved.
           </p>
         </div>
       </footer>
