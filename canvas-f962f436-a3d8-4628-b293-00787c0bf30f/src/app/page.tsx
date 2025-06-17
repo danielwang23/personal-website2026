@@ -21,7 +21,7 @@ import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
 // Framer Motion 2 import statements for animations below
-import { motion } from 'framer-motion';
+import { hover, motion } from 'framer-motion';
 import { faBasketball, faCamera, faGuitar, faLeaf, faCode, faTableTennisPaddleBall, faMountainSun } from '@fortawesome/free-solid-svg-icons';
 
 function getRandomPositionAndColor(safeZone: { top: number; left: number; bottom: number; right: number }, iconSize = 48) {
@@ -246,6 +246,19 @@ export default function Home() {
     },
   ];
 
+    // ==================INTERESTS==================
+
+
+  const interests = [
+    { name: "Photography", icon: "/hobbies/cam-logo2.png", link: "https://www.instagram.com/danielwangphotography/", type: "image", size: "w-12 h-12" },
+    { name: "Guitar", icon: "/hobbies/guitar.png", type: "image", size: "w-10 h-10" },
+    { name: "Tennis", icon: "/hobbies/utrlogo.png", link: "https://app.utrsports.net/search?sportTypes=tennis,pickleball&type=players&startDate=06/17/2025&utrMax=16&utrMin=1&utrTeamType=singles", type: "image", size: "w-10 h-10" },
+    { name: "Running", icon: "/hobbies/strava.png", link: "https://www.strava.com/activities/14222755631/overview", type: "image", size: "w-8 h-8" },
+    { name: "Travel Vlogging", icon: "/hobbies/yt-logo.webp", link: "https://www.youtube.com/@DanielWang6", type: "image", size: "w-8 h-8" },
+  ];
+
+  // ==================CLUBS==================
+
   const clubs = [
     {
       name: "CS Club",
@@ -269,14 +282,7 @@ export default function Home() {
         "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=80",
     },
   ];
-
-  const interests = [
-    { name: "Photography", icon: "📷" },
-    { name: "Hiking", icon: "🥾" },
-    { name: "Reading", icon: "📚" },
-    { name: "Music", icon: "🎵" },
-    { name: "Travel", icon: "✈️" },
-  ];
+  // ------------------------------------------------------------------------------
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -285,7 +291,7 @@ export default function Home() {
       {/* Hero Section */}
       <section
         id="hero"
-        className="relative flex items-center justify-center min-h-[80vh] w-full overflow-hidden"
+        className="relative flex items-center justify-center min-h-[90vh] w-full overflow-hidden"
       >
         {/* Rotating Background Images */}
         {/* <HeroBackground /> */}
@@ -295,7 +301,7 @@ export default function Home() {
         {/* Floating Icons insert statement*/}
 
         <div className="relative z-10 flex flex-col items-center justify-center text-center w-full">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-5 leading-snug pb-2 text-center bg-gradient-to-r from-[#7dd3fc] to-[#fdba74] bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-5 leading-snug pb-2 text-center bg-gradient-to-r from-[#7dd3fc] via-blue to-[#fdba74] bg-clip-text text-transparent">
             Daniel Wang
           </h1>
 
@@ -328,23 +334,73 @@ export default function Home() {
       <section id="about" className="py-16 px-4 md:px-8 bg-white">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-3xl font-bold mb-8 text-[#13294B]">About Me</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-2">
+          <div className="flex flex-col md:flex-row gap-8 items-start">
+            <div className="flex-1">
               <p className="text-lg mb-6">
-                I'm a passionate Computer Science and Data Science student at
-                UNC Chapel Hill with a focus on building intuitive and efficient
-                software solutions. My academic journey has equipped me with
-                strong analytical skills and a deep understanding of both
-                theoretical concepts and practical applications in the tech
-                industry.
+                Hi! My name is Daniel Wang and I am currently a Junior at UNC Chapel Hill 
+                double majoring in Computer Science and Data Science.
               </p>
               <p className="text-lg mb-6">
-                I enjoy tackling complex problems and turning data into
-                actionable insights. When I'm not coding, you can find me
-                exploring the outdoors, reading about new technologies, or
-                participating in hackathons.
+                I enjoy tackling complex problems and turning the data surrounding us into
+                actionable insights that drive impactful change. I am excited to expand on my skills in
+                leveraging ML/NLP in software development and data analytics, as well as understand 
+                financial risk management through data. 
               </p>
-              <div className="flex gap-4 mt-6">
+              <p className="text-lg mb-6">
+                To me, data visualization is like photography—using the right lens and composition 
+                to transform raw data into captivating stories. In my free time, I enjoy tennis, 
+                traveling, playing guitar, photography, and social & outdoor activities. 
+              </p>
+
+              {/* Personal Interests Section */}
+              <div className="mt-8">
+                <h3 className="text-lg font-semibold mb-4 text-[#4B9CD3]">
+                  Hobbies
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+                  {interests.map((interest) => (
+                    <a
+                      key={interest.name}
+                      href={interest.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <Card className="aspect-square w-24 h-24 
+                                      flex flex-col items-center justify-center 
+                                      p-1 
+                                      rounded-none
+                                      border-blue-200
+                                      bg-[#00000]
+                                      hover:shadow-lg transition-all duration-300 
+                                      cursor-pointer shadow-md hover:scale-105
+                                      relative group overflow-hidden">
+                        {/* Content */}
+                        <div className="flex flex-col items-center justify-center">
+                          {interest.type === "icon" ? (
+                            <div className="text-lg mb-0.5">{interest.icon}</div>
+                          ) : (
+                            <img 
+                              src={interest.icon} 
+                              alt={interest.name}
+                              className={`${interest.size} mb-0.5 object-contain`}
+                            />
+                          )}
+                          <p className="text-xs font-medium text-center leading-tight">{interest.name}</p>
+                        </div>
+                        
+                        {/* Hover overlay */}
+                        {/* <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-20 transition-all duration-300">
+                          <span className="text-black text-xs font-medium">See More!</span>
+                        </div> */}
+                      </Card>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Did not use logos code below in this section */}
+              {/* <div className="flex gap-4 mt-6">
                 <Button
                   asChild
                   variant="outline"
@@ -383,16 +439,23 @@ export default function Home() {
                     <Mail className="h-5 w-5" />
                   </Link>
                 </Button>
-              </div>
+              </div> */}
             </div>
-            <div className="flex justify-center">
-              <Avatar className="h-64 w-64">
-                <AvatarImage
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=portfolio"
-                  alt="Profile"
-                />
-                <AvatarFallback>YN</AvatarFallback>
-              </Avatar>
+            <div className="flex flex-col items-center md:self-start md:mt-[-2rem] md:ml-8">
+              <img
+                src="/about-img/headshotCroppedMore.jpg"
+                alt="Profile Photo"
+                className="h-64 w-64 md:h-80 md:w-80 rounded-full object-cover shadow-lg border-4 border-white mb-4"
+              />
+              <a
+                href="/Resume_Daniel_Wang.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-[#4B9CD3] text-white font-semibold rounded-full shadow hover:bg-[#13294B] transition-colors duration-200"
+              >
+                View Resume
+                <ExternalLink className="h-5 w-5 ml-1" />
+              </a>
             </div>
           </div>
         </div>
@@ -540,22 +603,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div>
-            <h3 className="text-xl font-semibold mb-6 text-[#4B9CD3]">
-              Personal Interests
-            </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-              {interests.map((interest) => (
-                <Card
-                  key={interest.name}
-                  className="flex flex-col items-center justify-center p-6 hover:shadow-md transition-shadow cursor-pointer h-32"
-                >
-                  <div className="text-4xl mb-2">{interest.icon}</div>
-                  <p className="font-medium text-center">{interest.name}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
+          {/* Removed Personal Interests Section: It's moved to About Me */}
         </div>
       </section>
 

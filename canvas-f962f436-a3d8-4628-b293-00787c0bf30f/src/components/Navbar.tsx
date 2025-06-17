@@ -64,8 +64,8 @@ export default function Navbar({ className = "" }: NavbarProps) {
           href="/"
           className="text-xl font-bold text-navy hover:text-light-blue transition-colors"
         >
-          <span className="text-navy">Daniel </span>
-          <span className="text-light-blue">Wang</span>
+          <span className="text-navy">John</span>
+          <span className="text-light-blue">Doe</span>
         </Link>
 
         {/* Desktop Navigation - Centered */}
