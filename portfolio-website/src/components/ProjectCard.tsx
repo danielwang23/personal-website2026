@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 interface ProjectCardProps {
-  id: string;
+  id?: string;
   title: string;
   description?: string;
   imageUrl: string;

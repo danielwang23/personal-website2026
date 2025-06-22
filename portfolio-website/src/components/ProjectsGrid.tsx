@@ -37,7 +37,7 @@ export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
         "Interactive dashboard for tracking personal finances and investments.",
       slug: "finance-dashboard",
       imageUrl:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+        "/hero-imgs/backgroundmountain.jpeg",
       technologies: ["React", "D3.js", "Firebase"],
     },
     {
@@ -101,6 +101,7 @@ export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
           {displayProjects.map((project) => (
             <ProjectCard
               key={project.id}
+              id={project.id}
               title={project.title}
               description={project.description}
               slug={project.slug}
