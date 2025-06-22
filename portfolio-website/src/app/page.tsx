@@ -28,6 +28,7 @@ import { FaPython, FaJsSquare, FaJava, FaReact, FaNodeJs, FaGitAlt, FaDocker, Fa
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiDjango, SiCplusplus, SiR, SiC, SiXcode, SiKubernetes, SiVim, SiPostgresql, SiMysql, SiPandas, SiNumpy, SiScikitlearn, SiPytorch, SiSpringboot, SiJunit5 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 
+const basePath = "/personal-website2026";
 
 // Home Screen animated icons ===================
 
@@ -120,10 +121,10 @@ function FloatingIcons() {
   // Floating hero photos (move slowly left to right, loop, underneath icons)
   const floatingPhotos = [
     // { src: "/hero-imgs/backgroundmountain.jpeg", size: 80, top: "26%", startX: '20vw', endX: '-10vw', duration: 40, delay: 0 },
-    { src: "/hero-imgs/ericgrad.JPG", size: 60, top: "15%", startX: '55vw', endX: '-10vw', duration: 40, delay: 0 },
-    { src: "/hero-imgs/koi.JPG", size: 60, top: "50%", startX: '70vw', endX: '100vw', duration: 40, delay: 0 },
-    { src: "/hero-imgs/ricowater.JPEG", size: 70, top: "65%", startX: '30vw', endX: '-10vw', duration: 50, delay: 0 },
-    { src: "/hero-imgs/southerns.JPEG", size: 65, top: "80%", startX: '40vw', endX: '100vw', duration: 40, delay: 0 },
+    { src: `${basePath}/hero-imgs/ericgrad.JPG`, size: 60, top: "15%", startX: '55vw', endX: '-10vw', duration: 40, delay: 0 },
+    { src: `${basePath}/hero-imgs/koi.JPG`, size: 60, top: "50%", startX: '70vw', endX: '100vw', duration: 40, delay: 0 },
+    { src: `${basePath}/hero-imgs/ricowater.JPEG`, size: 70, top: "65%", startX: '30vw', endX: '-10vw', duration: 50, delay: 0 },
+    { src: `${basePath}/hero-imgs/southerns.JPEG`, size: 65, top: "80%", startX: '40vw', endX: '100vw', duration: 40, delay: 0 },
 
     // Add more images as needed, but keep to 5-7 for performance
   ];
@@ -282,15 +283,15 @@ export default function Home() {
   // Mock data for the portfolio
   const techStack = {
     languages: [
-      { name: "Python", icon: <img src="/tech-stack-imgs/python.png" alt="Python" style={{ width: '2rem', height: '2rem' }} /> },
-      { name: "Java", icon: <img src="/tech-stack-imgs/java.png" alt="Java" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "Python", icon: <img src={`${basePath}/tech-stack-imgs/python.png`} alt="Python" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "Java", icon: <img src={`${basePath}/tech-stack-imgs/java.png`} alt="Java" style={{ width: '2rem', height: '2rem' }} /> },
       { name: "JavaScript", icon: <FaJsSquare color='#F7DF1E' /> },
       { name: "TypeScript", icon: <SiTypescript color='#3178C6' /> },
       { name: "R", icon: <SiR color='#276DC3' /> },
       { name: "Swift", icon: <FaSwift color='#FF6B35' /> },
       { name: "HTML", icon: <FaHtml5 color='#E34F26' /> },
       { name: "CSS", icon: <FaCss3 color='#1572B6' /> },
-      { name: "C", icon: <img src="/tech-stack-imgs/c.png" alt="C" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "C", icon: <img src={`${basePath}/tech-stack-imgs/c.png`} alt="C" style={{ width: '2rem', height: '2rem' }} /> },
       { name: "PostgreSQL", icon: <SiPostgresql color='#336791' /> },
       { name: "MySQL", icon: <SiMysql color='#4479A1' /> },
     ],
@@ -307,8 +308,8 @@ export default function Home() {
       { name: "scikit-learn", icon: <SiScikitlearn color='#F7931E' /> },
       { name: "PyTorch", icon: <SiPytorch color='#EE4C2C' /> },
       // { name: "Biopython", icon: <FaPython color='#306998' /> },
-      { name: "Matplotlib", icon:  <img src="/tech-stack-imgs/Matplotlib.png" alt="Matplotlib" style={{ width: '2rem', height: '2rem' }} /> },
-      { name: "Seaborn", icon: <img src="/tech-stack-imgs/seaborn.png" alt="Seaborn" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "Matplotlib", icon:  <img src={`${basePath}/tech-stack-imgs/Matplotlib.png`} alt="Matplotlib" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "Seaborn", icon: <img src={`${basePath}/tech-stack-imgs/seaborn.png`} alt="Seaborn" style={{ width: '2rem', height: '2rem' }} /> },
       { name: "JUnit", icon: <SiJunit5 color='#25A162' /> },
       { name: "REST APIs", icon: <Braces color='#e85d04' /> },
     ],
@@ -317,7 +318,7 @@ export default function Home() {
       { name: "Docker", icon: <FaDocker color='#2496ED' /> },
       { name: "Git", icon: <FaGitAlt color='#F05032' /> },
       { name: "GitHub Actions (CI/CD)", icon: <FontAwesomeIcon icon={faGithub} color='#181717' /> },
-      { name: "Tableau", icon: <img src="/tech-stack-imgs/tableau2.png" alt="Tableau" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "Tableau", icon: <img src={`${basePath}/tech-stack-imgs/tableau2.png`} alt="Tableau" style={{ width: '2rem', height: '2rem' }} /> },
       { name: "Kubernetes", icon: <SiKubernetes color="#3970e4"/> },
       { name: "VS Code", icon: <VscVscode color='#007ACC' /> },
       { name: "Xcode", icon: <SiXcode color="5dafff"/> },
@@ -331,11 +332,11 @@ export default function Home() {
 
 
   const interests = [
-    { name: "Photography", icon: "/hobbies/cam-logo2.png", link: "https://www.instagram.com/danielwangphotography/", type: "image", size: "w-12 h-12" },
-    { name: "Guitar", icon: "/hobbies/guitar.png", type: "image", size: "w-10 h-10" },
-    { name: "Tennis", icon: "/hobbies/utrlogo.png", link: "https://app.utrsports.net/search?sportTypes=tennis,pickleball&type=players&startDate=06/17/2025&utrMax=16&utrMin=1&utrTeamType=singles", type: "image", size: "w-10 h-10" },
-    { name: "Running", icon: "/hobbies/strava.png", link: "https://www.strava.com/activities/14222755631/overview", type: "image", size: "w-8 h-8" },
-    { name: "Travel Vlogging", icon: "/hobbies/yt-logo.webp", link: "https://www.youtube.com/@DanielWang6", type: "image", size: "w-8 h-8" },
+    { name: "Photography", icon: `${basePath}/hobbies/cam-logo2.png`, link: "https://www.instagram.com/danielwangphotography/", type: "image", size: "w-12 h-12" },
+    { name: "Guitar", icon: `${basePath}/hobbies/guitar.png`, type: "image", size: "w-10 h-10" },
+    { name: "Tennis", icon: `${basePath}/hobbies/utrlogo.png`, link: "https://app.utrsports.net/search?sportTypes=tennis,pickleball&type=players&startDate=06/17/2025&utrMax=16&utrMin=1&utrTeamType=singles", type: "image", size: "w-10 h-10" },
+    { name: "Running", icon: `${basePath}/hobbies/strava.png`, link: "https://www.strava.com/activities/14222755631/overview", type: "image", size: "w-8 h-8" },
+    { name: "Travel Vlogging", icon: `${basePath}/hobbies/yt-logo.webp`, link: "https://www.youtube.com/@DanielWang6", type: "image", size: "w-8 h-8" },
   ];
 
   // =========EXPERIENCES=======================================
@@ -373,22 +374,19 @@ export default function Home() {
       name: "CS Club",
       description:
         "Undergraduate computer science organization focused on professional development",
-      image:
-        "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&q=80",
+      image: `${basePath}/hero-imgs/ricowater.JPEG`,
     },
     {
       name: "Data Science Society",
       description:
         "Student group exploring data science applications and hosting workshops",
-      image:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=80",
+      image: `${basePath}/hero-imgs/koi.JPG`,
     },
     {
       name: "Hackathon Team",
       description:
         "Competitive coding team participating in hackathons across the country",
-      image:
-        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=80",
+      image: `${basePath}/hero-imgs/ericgrad.JPG`,
     },
   ];
 
@@ -399,7 +397,7 @@ export default function Home() {
       description:
         "A machine learning model to classify images using TensorFlow and Python.",
       githubUrl: "https://github.com/danielwang23",
-      imageUrl: "/hero-imgs/ricowater.JPEG",
+      imageUrl: `${basePath}/hero-imgs/ricowater.JPEG`,
       technologies: ["Python", "TensorFlow", "Scikit-learn"],
     },
     {
@@ -409,7 +407,7 @@ export default function Home() {
         "Interactive dashboard for tracking personal finances and investments.",
       githubUrl: "https://github.com/danielwang23",
       imageUrl:
-        "/hero-imgs/backgroundmountain.jpeg",
+        `${basePath}/hero-imgs/backgroundmountain.jpeg`,
       technologies: ["React", "D3.js", "Firebase"],
     },
     {
@@ -418,7 +416,7 @@ export default function Home() {
       description:
         "Tool for analyzing social media engagement and audience demographics.",
       githubUrl: "https://github.com/danielwang23",
-      imageUrl: "/hero-imgs/koi.JPG",
+      imageUrl: `${basePath}/hero-imgs/koi.JPG`,
       technologies: ["Python", "Flask", "MongoDB", "React"],
     },
     {
@@ -427,7 +425,7 @@ export default function Home() {
       description:
         "A fitness tracking application with workout plans and progress tracking.",
       githubUrl: "https://github.com/danielwang23",
-      imageUrl: "/hero-imgs/ericgrad.JPG",
+      imageUrl: `${basePath}/hero-imgs/ericgrad.JPG`,
       technologies: ["React Native", "Firebase", "Node.js"],
     },
     {
@@ -436,7 +434,7 @@ export default function Home() {
       description:
         "Product recommendation system using collaborative filtering algorithms.",
       githubUrl: "https://github.com/danielwang23",
-      imageUrl: "/hero-imgs/southerns.JPEG",
+      imageUrl: `${basePath}/hero-imgs/southerns.JPEG`,
       technologies: ["Python", "Pandas", "AWS", "SQL"],
     },
     {
@@ -445,7 +443,7 @@ export default function Home() {
       description:
         "Secure voting system built on blockchain technology for transparent elections.",
       githubUrl: "https://github.com/danielwang23",
-      imageUrl: "/about-img/headshotCroppedMore.jpg",
+      imageUrl: `${basePath}/about-img/headshotCroppedMore.jpg`,
       technologies: ["Solidity", "Ethereum", "Web3.js", "React"],
     },
   ];
@@ -652,12 +650,12 @@ export default function Home() {
                  initial={{ x: 100, opacity: 0 }}
                  animate={inView4 ? { x: 0, opacity: 1 } : { x: 100, opacity: 0 }}
                  transition={{ duration: 1.5, delay: 0.1 }}
-                 src="/about-img/headshotCroppedMore.jpg"
+                 src={`${basePath}/about-img/headshotCroppedMore.jpg`}
                  alt="Profile Photo"
                  className="h-64 w-64 md:h-80 md:w-80 rounded-full object-cover shadow-lg border-4 border-white mb-4"
                />
                <a
-                 href="/Daniel_A_Wang_Resume.pdf"
+                 href={`${basePath}/Daniel_A_Wang_Resume.pdf`}
                  target="_blank"
                  rel="noopener noreferrer"
                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#4B9CD3] text-white font-semibold rounded-full shadow hover:bg-[#13294B] transition-colors duration-200"
