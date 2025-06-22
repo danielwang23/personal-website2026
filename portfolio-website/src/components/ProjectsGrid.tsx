@@ -8,7 +8,7 @@ interface Project {
   id: string;
   title: string;
   description: string;
-  slug: string;
+  githubUrl: string;
   imageUrl: string;
   technologies: string[];
 }
@@ -25,7 +25,7 @@ export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
       title: "Machine Learning Classifier",
       description:
         "A machine learning model to classify images using TensorFlow and Python.",
-      slug: "ml-classifier",
+      githubUrl: "https://github.com/danielwang23",
       imageUrl:
         "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80",
       technologies: ["Python", "TensorFlow", "Scikit-learn"],
@@ -35,7 +35,7 @@ export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
       title: "Personal Finance Dashboard",
       description:
         "Interactive dashboard for tracking personal finances and investments.",
-      slug: "finance-dashboard",
+      githubUrl: "https://github.com/danielwang23",
       imageUrl:
         "/hero-imgs/backgroundmountain.jpeg",
       technologies: ["React", "D3.js", "Firebase"],
@@ -45,7 +45,7 @@ export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
       title: "Social Media Analytics Tool",
       description:
         "Tool for analyzing social media engagement and audience demographics.",
-      slug: "social-analytics",
+      githubUrl: "https://github.com/danielwang23",
       imageUrl:
         "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80",
       technologies: ["Python", "Flask", "MongoDB", "React"],
@@ -55,7 +55,7 @@ export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
       title: "Mobile Fitness App",
       description:
         "A fitness tracking application with workout plans and progress tracking.",
-      slug: "fitness-app",
+      githubUrl: "https://github.com/danielwang23",
       imageUrl:
         "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80",
       technologies: ["React Native", "Firebase", "Node.js"],
@@ -65,7 +65,7 @@ export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
       title: "E-commerce Recommendation Engine",
       description:
         "Product recommendation system using collaborative filtering algorithms.",
-      slug: "recommendation-engine",
+      githubUrl: "https://github.com/danielwang23",
       imageUrl:
         "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80",
       technologies: ["Python", "Pandas", "AWS", "SQL"],
@@ -75,7 +75,7 @@ export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
       title: "Blockchain Voting System",
       description:
         "Secure voting system built on blockchain technology for transparent elections.",
-      slug: "blockchain-voting",
+      githubUrl: "https://github.com/danielwang23",
       imageUrl:
         "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=800&q=80",
       technologies: ["Solidity", "Ethereum", "Web3.js", "React"],
@@ -104,7 +104,7 @@ export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
               id={project.id}
               title={project.title}
               description={project.description}
-              slug={project.slug}
+              githubUrl={project.githubUrl}
               imageUrl={project.imageUrl}
               technologies={project.technologies}
             />
