@@ -32,7 +32,7 @@ jobs:
     # ← everything under `run:` will now run from portfolio-website
     defaults:
        run:
-         working-directory: personal-website
+         working-directory: portfolio-website
     steps:
       - name: Checkout
         uses: actions/checkout@v4
