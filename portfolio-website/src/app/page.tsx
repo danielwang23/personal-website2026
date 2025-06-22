@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
-import ProjectsGrid from "@/components/ProjectsGrid";
+import ProjectCard from "@/components/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -389,6 +389,64 @@ export default function Home() {
         "Competitive coding team participating in hackathons across the country",
       image:
         "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=80",
+    },
+  ];
+
+  const projects = [
+    {
+      id: "1",
+      title: "Machine Learning Classifier",
+      description:
+        "A machine learning model to classify images using TensorFlow and Python.",
+      githubUrl: "https://github.com/danielwang23",
+      imageUrl: "/hero-imgs/ricowater.JPEG",
+      technologies: ["Python", "TensorFlow", "Scikit-learn"],
+    },
+    {
+      id: "2",
+      title: "Personal Finance Dashboard",
+      description:
+        "Interactive dashboard for tracking personal finances and investments.",
+      githubUrl: "https://github.com/danielwang23",
+      imageUrl:
+        "/hero-imgs/backgroundmountain.jpeg",
+      technologies: ["React", "D3.js", "Firebase"],
+    },
+    {
+      id: "3",
+      title: "Social Media Analytics Tool",
+      description:
+        "Tool for analyzing social media engagement and audience demographics.",
+      githubUrl: "https://github.com/danielwang23",
+      imageUrl: "/hero-imgs/koi.JPG",
+      technologies: ["Python", "Flask", "MongoDB", "React"],
+    },
+    {
+      id: "4",
+      title: "Mobile Fitness App",
+      description:
+        "A fitness tracking application with workout plans and progress tracking.",
+      githubUrl: "https://github.com/danielwang23",
+      imageUrl: "/hero-imgs/ericgrad.JPG",
+      technologies: ["React Native", "Firebase", "Node.js"],
+    },
+    {
+      id: "5",
+      title: "E-commerce Recommendation Engine",
+      description:
+        "Product recommendation system using collaborative filtering algorithms.",
+      githubUrl: "https://github.com/danielwang23",
+      imageUrl: "/hero-imgs/southerns.JPEG",
+      technologies: ["Python", "Pandas", "AWS", "SQL"],
+    },
+    {
+      id: "6",
+      title: "Blockchain Voting System",
+      description:
+        "Secure voting system built on blockchain technology for transparent elections.",
+      githubUrl: "https://github.com/danielwang23",
+      imageUrl: "/about-img/headshotCroppedMore.jpg",
+      technologies: ["Solidity", "Ethereum", "Web3.js", "React"],
     },
   ];
   // ------------------------------------------------------------------------------
@@ -791,7 +849,19 @@ export default function Home() {
               <div className="h-0.5 bg-gray-300 flex-grow"></div>
             </div>
           </div>
-          <ProjectsGrid />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                id={project.id}
+                title={project.title}
+                description={project.description}
+                githubUrl={project.githubUrl}
+                imageUrl={project.imageUrl}
+                technologies={project.technologies}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
