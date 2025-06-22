@@ -14,18 +14,22 @@ import {
   ExternalLink,
   ChevronRight,
   DivideSquare,
+  Braces,
 } from "lucide-react";
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
-// Framer Motion 2 import statements for animations below
-import { hover, motion, useInView } from 'framer-motion';
+// Framer Motion for animations below
+import { hover, motion, useInView, AnimatePresence } from 'framer-motion';
 import { faBasketball, faCamera, faGuitar, faLeaf, faCode, faTableTennisPaddleBall, faMountainSun } from '@fortawesome/free-solid-svg-icons';
-import { FaPython, FaJsSquare, FaJava, FaReact, FaNodeJs, FaGitAlt, FaDocker, FaAws, FaFigma } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiDjango, SiCplusplus, SiR } from 'react-icons/si';
+import { FaPython, FaJsSquare, FaJava, FaReact, FaNodeJs, FaGitAlt, FaDocker, FaAws, FaFigma, FaSwift, FaHtml5, FaCss3, FaAngular } from 'react-icons/fa';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiDjango, SiCplusplus, SiR, SiC, SiXcode, SiKubernetes, SiVim, SiPostgresql, SiMysql, SiPandas, SiNumpy, SiScikitlearn, SiPytorch, SiSpringboot, SiJunit5 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
+
+
+// Home Screen animated icons ===================
 
 function getRandomPositionAndColor(safeZone: { top: number; left: number; bottom: number; right: number }, iconSize = 48) {
   const colors = [
@@ -90,40 +94,6 @@ function RotatingWords({ words, color = 'white' }: { words: string[]; color?: st
   );
 }
 
-// ----Background Image (Not used since using floating objects)----
-
-
-// const heroImages = [
-//   "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1600&q=80",
-//   "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=1600&q=80",
-//   "https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?w=1600&q=80",
-//   "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1600&q=80",
-// ];
-
-// function HeroBackground() {
-//   const [bgIndex, setBgIndex] = useState(0);
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setBgIndex((prev) => (prev + 1) % heroImages.length);
-//     }, 7000); // 7 seconds per image
-//     return () => clearInterval(interval);
-//   }, []);
-//   return (
-//     <>
-//       {heroImages.map((img, i) => (
-//         <img
-//           key={img}
-//           src={img}
-//           alt="Background"
-//           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] z-0 ${i === bgIndex ? 'opacity-100' : 'opacity-0'}`}
-//           style={{ transitionProperty: 'opacity' }}
-//         />
-//       ))}
-//     </>
-//   );
-// }
-// ----ABOVE IS BACKGROUND IMAGE CODE PART (NOT USED)----
-
 
 // ----FLOATING OBJECTS CODE PART----
 // =================================================
@@ -138,7 +108,6 @@ function FloatingIcons() {
     { icon: faCode, color: '#F43F5E', style: { top: '75%', left: '40%' } },
     { icon: faTableTennisPaddleBall, color: '#FFD700', style: { top: '20%', left: '60%' } },
     { icon: faMountainSun, color: '#c8c8c8', style: { top: '22%', left: '40%' } },
-
   ];
   // Google font icons (fixed, strategic positions)
   const googleFloatingIcons = [
@@ -147,49 +116,131 @@ function FloatingIcons() {
     { icon: 'headphones', color: '#f9bbfd', style: { top: '12%', left: '50%' } }, // bottom left 
     { icon: 'music_note', color: '#a259ff', style: { bottom: '10%', left: '50%', transform: 'translateX(-50%)' } }, // bottom center
   ];
+
+  // Floating hero photos (move slowly left to right, loop, underneath icons)
+  const floatingPhotos = [
+    // { src: "/hero-imgs/backgroundmountain.jpeg", size: 80, top: "26%", startX: '20vw', endX: '-10vw', duration: 40, delay: 0 },
+    { src: "/hero-imgs/ericgrad.JPG", size: 60, top: "15%", startX: '55vw', endX: '-10vw', duration: 40, delay: 0 },
+    { src: "/hero-imgs/koi.JPG", size: 60, top: "50%", startX: '70vw', endX: '100vw', duration: 40, delay: 0 },
+    { src: "/hero-imgs/ricowater.JPEG", size: 70, top: "65%", startX: '30vw', endX: '-10vw', duration: 50, delay: 0 },
+    { src: "/hero-imgs/southerns.JPEG", size: 65, top: "80%", startX: '40vw', endX: '100vw', duration: 40, delay: 0 },
+
+    // Add more images as needed, but keep to 5-7 for performance
+  ];
+
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
-      {/* FontAwesome icons in fixed positions */}
-      {floatingObjects.map((obj, i) => (
-        <motion.div
-          key={i}
-          style={{ ...obj.style, position: 'absolute' }}
-          animate={{
-            y: [0, -20, 0, 20, 0],
-            x: [0, 10, 0, -10, 0],
-          }}
-          transition={{
-            duration: 6 + Math.random() * 2,
-            repeat: Infinity,
-            repeatType: 'loop',
-            delay: Math.random() * 2,
-          }}
-        >
-          <FontAwesomeIcon icon={obj.icon} size="2x" color={obj.color} style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.15))' }} />
-        </motion.div>
-      ))}
-      {/* Google font icons in fixed, strategic positions */}
-      {googleFloatingIcons.map((obj, i) => (
-        <motion.div
-          key={obj.icon}
-          style={{ position: 'absolute', ...obj.style }}
-          animate={{
-            y: [0, -15, 0, 15, 0],
-            x: [0, 8, 0, -8, 0],
-          }}
-          transition={{
-            duration: 6 + Math.random() * 2,
-            repeat: Infinity,
-            repeatType: 'loop',
-            delay: Math.random() * 2,
-          }}
-        >
-          <span className="material-symbols-outlined" style={{ fontSize: 40, color: obj.color, display: 'inline-block', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.10))' }}>
-            {obj.icon}
-          </span>
-        </motion.div>
-      ))}
-    </div>
+    <>
+      {/* Floating hero photos (underneath all icons/objects) */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+        {floatingPhotos.map((photo, i) => {
+          // Determine direction: left-to-right or right-to-left
+          const isLTR = parseFloat(photo.endX) > parseFloat(photo.startX);
+          // Offset for wrap-around
+          const offset = isLTR ? '-100vw' : '+100vw';
+          // Helper to build offset x values
+          const offsetX = (x: string) => `calc(${x} ${isLTR ? '-' : '+'} 100vw)`;
+          return (
+            <React.Fragment key={photo.src}>
+              {/* Main image */}
+              <motion.img
+                src={photo.src}
+                alt="Floating Hero"
+                style={{
+                  position: 'absolute',
+                  top: photo.top,
+                  left: 0,
+                  width: photo.size,
+                  height: photo.size,
+                  borderRadius: 8,
+                  objectFit: 'cover',
+                  pointerEvents: 'none',
+                }}
+                initial={{ x: photo.startX }}
+                animate={{ x: photo.endX }}
+                transition={{
+                  x: {
+                    repeat: Infinity,
+                    repeatType: 'loop',
+                    duration: photo.duration,
+                    ease: 'linear',
+                    delay: photo.delay || 0,
+                  },
+                }}
+              />
+              {/* Offset image for seamless wrap */}
+              <motion.img
+                src={photo.src}
+                alt="Floating Hero"
+                style={{
+                  position: 'absolute',
+                  top: photo.top,
+                  left: 0,
+                  width: photo.size,
+                  height: photo.size,
+                  borderRadius: 8,
+                  objectFit: 'cover',
+                  pointerEvents: 'none',
+                }}
+                initial={{ x: offsetX(photo.startX) }}
+                animate={{ x: offsetX(photo.endX) }}
+                transition={{
+                  x: {
+                    repeat: Infinity,
+                    repeatType: 'loop',
+                    duration: photo.duration,
+                    ease: 'linear',
+                    delay: photo.delay || 0,
+                  },
+                }}
+              />
+            </React.Fragment>
+          );
+        })}
+      </div>
+      {/* Icons and other floating objects above photos */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-10">
+        {/* FontAwesome icons in fixed positions */}
+        {floatingObjects.map((obj, i) => (
+          <motion.div
+            key={i}
+            style={{ ...obj.style, position: 'absolute' }}
+            animate={{
+              y: [0, -8, 0, 8, 0],
+              x: [0, 4, 0, -4, 0],
+            }}
+            transition={{
+              duration: 12 + Math.random() * 4,
+              repeat: Infinity,
+              repeatType: 'loop',
+              delay: Math.random() * 2,
+            }}
+          >
+            <FontAwesomeIcon icon={obj.icon} size="2x" color={obj.color} style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.15))' }} />
+          </motion.div>
+        ))}
+        {/* Google font icons in fixed, strategic positions */}
+        {googleFloatingIcons.map((obj, i) => (
+          <motion.div
+            key={obj.icon}
+            style={{ position: 'absolute', ...obj.style }}
+            animate={{
+              y: [0, -8, 0, 8, 0],
+              x: [0, 4, 0, -4, 0],
+            }}
+            transition={{
+              duration: 12 + Math.random() * 4,
+              repeat: Infinity,
+              repeatType: 'loop',
+              delay: Math.random() * 2,
+            }}
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: 40, color: obj.color, display: 'inline-block', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.10))' }}>
+              {obj.icon}
+            </span>
+          </motion.div>
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -198,40 +249,96 @@ function FloatingIcons() {
 
 export default function Home() {
   const ref1 = useRef(null);
-  const inView1 = useInView(ref1, { once: true, amount: 0.9 });
+  const inView1 = useInView(ref1, { once: false, amount: 0.9 });
   const ref2 = useRef(null);
-  const inView2 = useInView(ref2, { once: true, amount: 0.9 });
+  const inView2 = useInView(ref2, { once: false, amount: 0.9 });
   const ref3 = useRef(null);
-  const inView3 = useInView(ref3, { once: true, amount: 0.9 });
+  const inView3 = useInView(ref3, { once: false, amount: 0.95 });
   const ref4 = useRef(null);
-  const inView4 = useInView(ref4, { once: true, amount: 0.9 });
+  const inView4 = useInView(ref4, { once: false, amount: 0.9 });
+  const nameRef = useRef(null);
+  const nameInView = useInView(nameRef, { once: false, amount: 0.5 });
+  const heroRef = useRef(null);
+  const heroInView = useInView(heroRef, { amount: 0, once: false });
+
+  // Variants for text animation (sliding in from left, standard out)
+  const textVariants = {
+    hidden: { x: -100, opacity: 0, transition: { duration: 0.5 } },
+    visible: { x: 0, opacity: 1, transition: { duration: 1.5 } },
+  };
+
+  // Variants for the 3rd paragraph (faster hidden transition)
+  const textVariantsP3 = {
+    hidden: { x: -100, opacity: 0, transition: { duration: 0.4 } },
+    visible: { x: 0, opacity: 1, transition: { duration: 1.5 } },
+  };
+
+  // Variants for image animation (sliding in from right, faster out)
+  const imageVariants = {
+    hidden: { x: 100, opacity: 0, transition: { duration: 0.6 } },
+    visible: { x: 0, opacity: 1, transition: { duration: 1.2 } },
+  };
+
   // Mock data for the portfolio
   const techStack = {
     languages: [
-      { name: "Python", icon: <FaPython color='#3572A5' /> },
+      { name: "Python", icon: <img src="/tech-stack-imgs/python.png" alt="Python" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "Java", icon: <img src="/tech-stack-imgs/java.png" alt="Java" style={{ width: '2rem', height: '2rem' }} /> },
       { name: "JavaScript", icon: <FaJsSquare color='#F7DF1E' /> },
       { name: "TypeScript", icon: <SiTypescript color='#3178C6' /> },
-      { name: "Java", icon: <FaJava color='#007396' /> },
-      { name: "C++", icon: <SiCplusplus color='#00599C' /> },
       { name: "R", icon: <SiR color='#276DC3' /> },
+      { name: "Swift", icon: <FaSwift color='#FF6B35' /> },
+      { name: "HTML", icon: <FaHtml5 color='#E34F26' /> },
+      { name: "CSS", icon: <FaCss3 color='#1572B6' /> },
+      { name: "C", icon: <img src="/tech-stack-imgs/c.png" alt="C" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "PostgreSQL", icon: <SiPostgresql color='#336791' /> },
+      { name: "MySQL", icon: <SiMysql color='#4479A1' /> },
     ],
     frameworks: [
+    { name: "Angular", icon: <FaAngular color='#DD0031' /> },
+    { name: "Spring Boot", icon: <SiSpringboot color='#6DB33F' /> },
       { name: "React", icon: <FaReact color='#61DAFB' /> },
       { name: "Next.js", icon: <SiNextdotjs color='#000000' /> },
       { name: "Node.js", icon: <FaNodeJs color='#339933' /> },
       { name: "TailwindCSS", icon: <SiTailwindcss color='#06B6D4' /> },
-      { name: "Django", icon: <SiDjango color='#092E20' /> },
+      { name: "SwiftUI", icon: <FaSwift color='#FF6B35' /> },
+      { name: "Pandas", icon: <SiPandas color='#130654' /> },
+      { name: "NumPy", icon: <SiNumpy color='#4DABCF' /> },
+      { name: "scikit-learn", icon: <SiScikitlearn color='#F7931E' /> },
+      { name: "PyTorch", icon: <SiPytorch color='#EE4C2C' /> },
+      // { name: "Biopython", icon: <FaPython color='#306998' /> },
+      { name: "Matplotlib", icon:  <img src="/tech-stack-imgs/Matplotlib.png" alt="Matplotlib" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "Seaborn", icon: <img src="/tech-stack-imgs/seaborn.png" alt="Seaborn" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "JUnit", icon: <SiJunit5 color='#25A162' /> },
+      { name: "REST APIs", icon: <Braces color='#e85d04' /> },
     ],
     tools: [
-      { name: "Git", icon: <FaGitAlt color='#F05032' /> },
+      { name: "AWS Cloud", icon: <FaAws color='#FF9900' /> },
       { name: "Docker", icon: <FaDocker color='#2496ED' /> },
-      { name: "AWS", icon: <FaAws color='#FF9900' /> },
-      { name: "Figma", icon: <FaFigma color='#F24E1E' /> },
+      { name: "Git", icon: <FaGitAlt color='#F05032' /> },
+      { name: "GitHub Actions (CI/CD)", icon: <FontAwesomeIcon icon={faGithub} color='#181717' /> },
+      { name: "Tableau", icon: <img src="/tech-stack-imgs/tableau2.png" alt="Tableau" style={{ width: '2rem', height: '2rem' }} /> },
+      { name: "Kubernetes", icon: <SiKubernetes color="#3970e4"/> },
       { name: "VS Code", icon: <VscVscode color='#007ACC' /> },
+      { name: "Xcode", icon: <SiXcode color="5dafff"/> },
+      { name: "Vim", icon: <SiVim color="green" /> },
+      { name: "Figma", icon: <FaFigma color='#F24E1E' /> },
     ],
   };
 
   // =================================================
+  // ==================INTERESTS==================
+
+
+  const interests = [
+    { name: "Photography", icon: "/hobbies/cam-logo2.png", link: "https://www.instagram.com/danielwangphotography/", type: "image", size: "w-12 h-12" },
+    { name: "Guitar", icon: "/hobbies/guitar.png", type: "image", size: "w-10 h-10" },
+    { name: "Tennis", icon: "/hobbies/utrlogo.png", link: "https://app.utrsports.net/search?sportTypes=tennis,pickleball&type=players&startDate=06/17/2025&utrMax=16&utrMin=1&utrTeamType=singles", type: "image", size: "w-10 h-10" },
+    { name: "Running", icon: "/hobbies/strava.png", link: "https://www.strava.com/activities/14222755631/overview", type: "image", size: "w-8 h-8" },
+    { name: "Travel Vlogging", icon: "/hobbies/yt-logo.webp", link: "https://www.youtube.com/@DanielWang6", type: "image", size: "w-8 h-8" },
+  ];
+
+  // =========EXPERIENCES=======================================
 
   const experiences = [
     {
@@ -257,18 +364,8 @@ export default function Home() {
       description: "Conducted data analysis and machine learning research",
     },
   ];
-
-    // ==================INTERESTS==================
-
-
-  const interests = [
-    { name: "Photography", icon: "/hobbies/cam-logo2.png", link: "https://www.instagram.com/danielwangphotography/", type: "image", size: "w-12 h-12" },
-    { name: "Guitar", icon: "/hobbies/guitar.png", type: "image", size: "w-10 h-10" },
-    { name: "Tennis", icon: "/hobbies/utrlogo.png", link: "https://app.utrsports.net/search?sportTypes=tennis,pickleball&type=players&startDate=06/17/2025&utrMax=16&utrMin=1&utrTeamType=singles", type: "image", size: "w-10 h-10" },
-    { name: "Running", icon: "/hobbies/strava.png", link: "https://www.strava.com/activities/14222755631/overview", type: "image", size: "w-8 h-8" },
-    { name: "Travel Vlogging", icon: "/hobbies/yt-logo.webp", link: "https://www.youtube.com/@DanielWang6", type: "image", size: "w-8 h-8" },
-  ];
-
+  
+  // =========================================
   // ==================CLUBS==================
 
   const clubs = [
@@ -297,25 +394,29 @@ export default function Home() {
   // ------------------------------------------------------------------------------
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Navbar />
 
       {/* Hero Section */}
       <section
+        ref={heroRef}
         id="hero"
-        className="relative flex items-center justify-center min-h-[90vh] w-full overflow-hidden"
+        className="relative flex items-center justify-center min-h-[100vh] w-full overflow-hidden"
       >
         {/* Rotating Background Images */}
-        {/* <HeroBackground /> */}
-        {/* Commented out above insert statements because using floating objects instead */}
-
-        <FloatingIcons />
+        {heroInView && <FloatingIcons />}
         {/* Floating Icons insert statement*/}
 
         <div className="relative z-10 flex flex-col items-center justify-center text-center w-full">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-5 leading-snug pb-2 text-center bg-gradient-to-r from-[#7dd3fc] via-blue to-[#fdba74] bg-clip-text text-transparent">
+          <motion.h1
+            ref={nameRef}
+            initial={{ opacity: 0, y: -20 }}
+            animate={nameInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-5xl md:text-7xl font-extrabold mb-5 leading-snug pb-2 text-center bg-gradient-to-r from-[#7dd3fc] via-blue to-[#fdba74] bg-clip-text text-transparent"
+          >
             Daniel Wang
-          </h1>
+          </motion.h1>
 
         
           <div className="flex items-center justify-center text-2xl md:text-3xl font-light mb-8">
@@ -335,7 +436,7 @@ export default function Home() {
           </div>
         </div>
         {/* Overlay for darkening background for readability */}
-        <div className="absolute inset-0 bg-[#e3f0ff]/25 z-0" />
+        <div className="absolute inset-0 bg-sky-100 bg-opacity-50 -z-10" />
       </section>
 
 
@@ -343,174 +444,200 @@ export default function Home() {
 
 
       {/* About Me Section */}
-      <section id="about" className="py-16 px-4 md:px-8 bg-white">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-3xl font-bold mb-8 text-[#13294B]">About Me</h2>
-          <div className="flex flex-col md:flex-row gap-8 items-start">
-            <div className="flex-1">
-              <motion.p
-                ref={ref1}
-                initial={{ x: -100, opacity: 0 }}
-                animate={inView1 ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
-                transition={{ duration: 1.5, delay: 0.1 }}
-                className="text-lg mb-6"
-              >
-                Hi! My name is Daniel Wang and I am currently a Junior at UNC Chapel Hill 
-                double majoring in Computer Science and Data Science.
-              </motion.p>
-              <motion.p
-                ref={ref2}
-                initial={{ x: -100, opacity: 0 }}
-                animate={inView2 ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
-                transition={{ duration: 1.5, delay: 0.2 }}
-                className="text-lg mb-6"
-              >
-                I enjoy tackling complex problems and turning the data surrounding us into
-                actionable insights that drive impactful change. I am excited to expand on my skills in
-                leveraging ML/NLP in software development and data analytics, as well as understand 
-                financial risk management through data. 
-              </motion.p>
-              <motion.p
-                ref={ref3}
-                initial={{ x: -100, opacity: 0 }}
-                animate={inView3 ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
-                transition={{ duration: 1.5, delay: 0.3 }}
-                className="text-lg mb-6"
-              >
-                To me, data visualization is like photography—using the right lens and composition 
-                to transform raw data into captivating stories. In my free time, I enjoy tennis, 
-                traveling, playing guitar, photography, and social & outdoor activities. 
-              </motion.p>
+      
+       <section
+         id="about"
+         className="relative py-16 px-4 md:px-8 bg-white min-h-[80vh]"
+       >
+         {/* overlay behind all the content */}
+         <div className="absolute inset-0 bg-white/80 -z-10" />
+         <div className="container mx-auto max-w-6xl">
+           <div className="flex flex-col items-center mb-8">
+             <h2 className="text-3xl font-bold text-[#13294B] text-center">About Me</h2>
+             <div className="flex justify-center items-center w-3/4 max-w-[120px] mx-auto mt-2">
+               <div className="h-0.5 bg-gray-300 flex-grow"></div>
+               <div className="h-1 bg-[#98d6ff] w-1/3"></div>
+               <div className="h-0.5 bg-gray-300 flex-grow"></div>
+             </div>
+           </div>
+           <div className="flex flex-col md:flex-row gap-8 items-start">
+             <div className="flex-1">
+               <motion.p
+                 ref={ref1}
+                 variants={textVariants}
+                 initial="hidden"
+                 animate={inView1 ? "visible" : "hidden"}
+                 transition={{ delay: 0.1 }}
+                 className="text-lg mb-6"
+               >
+                 Hi! My name is Daniel Wang and I am currently a Junior at UNC Chapel Hill 
+                 double majoring in Computer Science and Data Science.
+               </motion.p>
+               <motion.p
+                 ref={ref2}
+                 variants={textVariants}
+                 initial="hidden"
+                 animate={inView2 ? "visible" : "hidden"}
+                 transition={{ delay: 0.2 }}
+                 className="text-lg mb-6"
+               >
+                 I enjoy tackling complex problems and turning the data surrounding us into
+                 actionable insights that drive impactful change. I am excited to expand on my skills in
+                 leveraging ML/NLP in software development and data analytics, as well as understand 
+                 financial risk management through data. 
+               </motion.p>
+               <motion.p
+                 ref={ref3}
+                 variants={textVariantsP3}
+                 initial="hidden"
+                 animate={inView3 ? "visible" : "hidden"}
+                 transition={{ delay: 0.2 }}
+                 className="text-lg mb-6"
+               >
+                 To me, data visualization is like photography—using the right lens and composition 
+                 to transform raw data into captivating stories. In my free time, I enjoy tennis, 
+                 traveling, playing guitar, photography, and social & outdoor activities. 
+               </motion.p>
 
-              {/* Personal Interests Section */}
-              <div className="mt-8">
-                <h3 className="text-lg font-semibold mb-4 text-[#4B9CD3]">
-                  Hobbies
-                </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
-                  {interests.map((interest) => (
-                    <a
-                      key={interest.name}
-                      href={interest.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block"
-                    >
-                      <Card className="aspect-square w-24 h-24 
-                                      flex flex-col items-center justify-center 
-                                      p-1 
-                                      rounded-none
-                                      border-blue-200
-                                      bg-[#00000]
-                                      hover:shadow-lg transition-all duration-300 
-                                      cursor-pointer shadow-md hover:scale-105
-                                      relative group overflow-hidden">
-                        {/* Content */}
-                        <div className="flex flex-col items-center justify-center">
-                          {interest.type === "icon" ? (
-                            <div className="text-lg mb-0.5">{interest.icon}</div>
-                          ) : (
-                            <img 
-                              src={interest.icon} 
-                              alt={interest.name}
-                              className={`${interest.size} mb-0.5 object-contain`}
-                            />
-                          )}
-                          <p className="text-xs font-medium text-center leading-tight">{interest.name}</p>
-                        </div>
-                        
-                        {/* Hover overlay */}
-                        {/* <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-20 transition-all duration-300">
-                          <span className="text-black text-xs font-medium">See More!</span>
-                        </div> */}
-                      </Card>
-                    </a>
-                  ))}
-                </div>
-              </div>
+               {/* Personal Interests Section */}
+               <div className="mt-8">
+                 <h3 className="text-lg font-semibold mb-4 text-[#4B9CD3]">
+                   Hobbies
+                 </h3>
+                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+                   {interests.map((interest) => (
+                     <a
+                       key={interest.name}
+                       href={interest.link}
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       className="block"
+                     >
+                       <Card className="aspect-square w-24 h-24 
+                                       flex flex-col items-center justify-center 
+                                       p-1 
+                                       rounded-none
+                                       border-blue-200
+                                       bg-[#00000]
+                                       hover:shadow-lg transition-all duration-300 
+                                       cursor-pointer shadow-md hover:scale-105
+                                       relative group overflow-hidden">
+                         {/* Content */}
+                         <div className="flex flex-col items-center justify-center">
+                           {interest.type === "icon" ? (
+                             <div className="text-lg mb-0.5">{interest.icon}</div>
+                           ) : (
+                             <img 
+                               src={interest.icon} 
+                               alt={interest.name}
+                               className={`${interest.size} mb-0.5 object-contain`}
+                             />
+                           )}
+                           <p className="text-xs font-medium text-center leading-tight">{interest.name}</p>
+                         </div>
+                         
+                         {/* Hover overlay */}
+                         {/* <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-20 transition-all duration-300">
+                           <span className="text-black text-xs font-medium">See More!</span>
+                         </div> */}
+                       </Card>
+                     </a>
+                   ))}
+                 </div>
+               </div>
 
-              {/* Did not use logos code below in this section */}
-              {/* <div className="flex gap-4 mt-6">
-                <Button
-                  asChild
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full"
-                >
-                  <Link
-                    href="https://github.com/yourusername"
-                    target="_blank"
-                    aria-label="GitHub"
-                  >
-                    <Github className="h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full"
-                >
-                  <Link
-                    href="https://linkedin.com/in/yourusername"
-                    target="_blank"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin className="h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full"
-                >
-                  <Link href="mailto:your.email@example.com" aria-label="Email">
-                    <Mail className="h-5 w-5" />
-                  </Link>
-                </Button>
-              </div> */}
-            </div>
-            <div className="flex flex-col items-center md:self-start md:mt-[-2rem] md:ml-8">
-              <motion.img
-                ref={ref4}
-                initial={{ x: 100, opacity: 0 }}
-                animate={inView4 ? { x: 0, opacity: 1 } : { x: 100, opacity: 0 }}
-                transition={{ duration: 1.5, delay: 0.1 }}
-                src="/about-img/headshotCroppedMore.jpg"
-                alt="Profile Photo"
-                className="h-64 w-64 md:h-80 md:w-80 rounded-full object-cover shadow-lg border-4 border-white mb-4"
-              />
-              <a
-                href="/Resume_Daniel_Wang.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-[#4B9CD3] text-white font-semibold rounded-full shadow hover:bg-[#13294B] transition-colors duration-200"
-              >
-                View Resume
-                <ExternalLink className="h-5 w-5 ml-1" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+               {/* Did not use logos code below in this section */}
+               {/* <div className="flex gap-4 mt-6">
+                 <Button
+                   asChild
+                   variant="outline"
+                   size="icon"
+                   className="rounded-full"
+                 >
+                   <Link
+                     href="https://github.com/yourusername"
+                     target="_blank"
+                     aria-label="GitHub"
+                   >
+                     <Github className="h-5 w-5" />
+                   </Link>
+                 </Button>
+                 <Button
+                   asChild
+                   variant="outline"
+                   size="icon"
+                   className="rounded-full"
+                 >
+                   <Link
+                     href="https://linkedin.com/in/yourusername"
+                     target="_blank"
+                     aria-label="LinkedIn"
+                   >
+                     <Linkedin className="h-5 w-5" />
+                   </Link>
+                 </Button>
+                 <Button
+                   asChild
+                   variant="outline"
+                   size="icon"
+                   className="rounded-full"
+                 >
+                   <Link href="mailto:your.email@example.com" aria-label="Email">
+                     <Mail className="h-5 w-5" />
+                   </Link>
+                 </Button>
+               </div> */}
+             </div>
+             <div className="flex flex-col items-center md:self-start md:mt-[-2rem] md:ml-8">
+               <motion.img
+                 ref={ref4}
+                 initial={{ x: 100, opacity: 0 }}
+                 animate={inView4 ? { x: 0, opacity: 1 } : { x: 100, opacity: 0 }}
+                 transition={{ duration: 1.5, delay: 0.1 }}
+                 src="/about-img/headshotCroppedMore.jpg"
+                 alt="Profile Photo"
+                 className="h-64 w-64 md:h-80 md:w-80 rounded-full object-cover shadow-lg border-4 border-white mb-4"
+               />
+               <a
+                 href="/Daniel_A_Wang_Resume.pdf"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="inline-flex items-center gap-2 px-4 py-2 bg-[#4B9CD3] text-white font-semibold rounded-full shadow hover:bg-[#13294B] transition-colors duration-200"
+               >
+                 View Resume
+                 <ExternalLink className="h-5 w-5 ml-1" />
+               </a>
+             </div>
+           </div>
+         </div>
+       </section>
 
       {/* TECH STACK SECTION================================================ */}
 
       {/* Tech Stack Section */}
       <section id="tech-stack" className="py-16 px-4 md:px-8 bg-gray-50">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-3xl font-bold mb-8 text-[#13294B]">Tech Stack</h2>
-
+          <div className="flex flex-col items-center mb-8">
+            <h2 className="text-3xl font-bold text-[#13294B] text-center">Technology I Use</h2>
+            <div className="flex justify-center items-center w-3/4 max-w-[200px] mx-auto mt-2">
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+              <div className="h-1 bg-[#98d6ff] w-1/3"></div>
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+            </div>
+          </div>
           <div className="mb-10">
-            <h3 className="text-xl font-semibold mb-4 text-[#4B9CD3]">
+            <p>Some of my favorite languages, frameworks, and tools I frequently use to build fun projects.</p>
+          </div>
+
+          <div className="mb-2">
+            <h3 className="text-xl font-semibold mb-2 text-[#4B9CD3]">
               Languages
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-1">
+            <div className="flex flex-wrap gap-1">
               {techStack.languages.map((tech) => (
                 <div
                   key={tech.name}
-                  className="flex items-center flex-row p-2"
+                  className="flex items-center flex-row p-2" // hover:shadow-md transition-all duration-200
                 >
                   <div className="text-4xl mr-2">{tech.icon}</div>
                   <p className="text-sm font-medium text-gray-800">{tech.name}</p>
@@ -519,15 +646,15 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mb-10">
-            <h3 className="text-xl font-semibold mb-4 text-[#4B9CD3]">
-              Frameworks
+          <div className="mb-2">
+            <h3 className="text-xl font-semibold mb-2 text-[#4B9CD3]">
+              Frameworks & Libraries
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-1">
+            <div className="flex flex-wrap gap-1">
               {techStack.frameworks.map((tech) => (
                 <div
                   key={tech.name}
-                  className="flex items-center flex-row p-2 border border-gray-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-200"
+                  className="flex items-center flex-row p-2" 
                 >
                   <div className="text-4xl mr-2">{tech.icon}</div>
                   <p className="text-sm font-medium text-gray-800">{tech.name}</p>
@@ -537,12 +664,12 @@ export default function Home() {
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold mb-4 text-[#4B9CD3]">Tools</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-1">
+            <h3 className="text-xl font-semibold mb-2 text-[#4B9CD3]">Dev Tools</h3>
+            <div className="flex flex-wrap gap-1">
               {techStack.tools.map((tech) => (
                 <div
                   key={tech.name}
-                  className="flex items-center flex-row p-2 border border-gray-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-200"
+                  className="flex items-center flex-row p-2"
                 >
                   <div className="text-4xl mr-2">{tech.icon}</div>
                   <p className="text-sm font-medium text-gray-800">{tech.name}</p>
@@ -559,8 +686,14 @@ export default function Home() {
       {/* Experience Section */}
       <section id="experience" className="py-16 px-4 md:px-8 bg-white">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-3xl font-bold mb-8 text-[#13294B]">Experience</h2>
-
+          <div className="flex flex-col items-center mb-8">
+            <h2 className="text-3xl font-bold text-[#13294B] text-center">Experience</h2>
+            <div className="flex justify-center items-center w-3/4 max-w-[120px] mx-auto mt-2">
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+              <div className="h-1 bg-[#98d6ff] w-1/3"></div>
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+            </div>
+          </div>
           <div className="relative">
             {/* Timeline line */}
             <div className="absolute left-4 md:left-1/2 h-full w-0.5 bg-[#4B9CD3] transform -translate-x-1/2"></div>
@@ -609,19 +742,23 @@ export default function Home() {
       {/* Interests & Clubs Section */}
       <section id="interests" className="py-16 px-4 md:px-8 bg-gray-50">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-3xl font-bold mb-8 text-[#13294B]">
-            Interests & Clubs
-          </h2>
-
+          <div className="flex flex-col items-center mb-8">
+            <h2 className="text-3xl font-bold text-[#13294B] text-center">Clubs!</h2>
+            <div className="flex justify-center items-center w-3/4 max-w-[80px] mx-auto mt-2">
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+              <div className="h-1 bg-[#98d6ff] w-1/3"></div>
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+            </div>
+          </div>
           <div className="mb-12">
-            <h3 className="text-xl font-semibold mb-6 text-[#4B9CD3]">Clubs</h3>
+            {/* <h3 className="text-xl font-semibold mb-6 text-[#4B9CD3]">Clubs</h3> */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {clubs.map((club) => (
                 <Card
                   key={club.name}
                   className="overflow-hidden hover:shadow-lg transition-shadow"
                 >
-                  <div className="h-48 overflow-hidden">
+                  <div className="h-32 overflow-hidden">
                     <img
                       src={club.image}
                       alt={club.name}
@@ -637,23 +774,38 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Removed Personal Interests Section: It's moved to About Me */}
         </div>
       </section>
+
+      {/* ============================================PROJECTS============================================ */}
+      {/* ================================================================================================ */}
 
       {/* Projects Section */}
       <section id="projects" className="py-16 px-4 md:px-8 bg-white">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-3xl font-bold mb-8 text-[#13294B]">Projects</h2>
+          <div className="flex flex-col items-center mb-8">
+            <h2 className="text-3xl font-bold text-[#13294B] text-center">Projects</h2>
+            <div className="flex justify-center items-center w-3/4 max-w-[100px] mx-auto mt-2">
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+              <div className="h-1 bg-[#98d6ff] w-1/3"></div>
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+            </div>
+          </div>
           <ProjectsGrid />
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* ============================================CONTACT============================================ */}
       <section id="contact" className="py-16 px-4 md:px-8 bg-gray-50">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-3xl font-bold mb-8 text-[#13294B]">Contact Me</h2>
-
+          <div className="flex flex-col items-center mb-8">
+            <h2 className="text-3xl font-bold text-[#13294B] text-center">Contact Me</h2>
+            <div className="flex justify-center items-center w-3/4 max-w-[140px] mx-auto mt-2">
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+              <div className="h-1 bg-[#98d6ff] w-1/3"></div>
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+            </div>
+          </div>
           <div className="max-w-2xl mx-auto">
             <Card className="p-6">
               <form className="space-y-6">
@@ -746,7 +898,7 @@ export default function Home() {
                   target="_blank"
                   aria-label="GitHub"
                 >
-                  <Github className="h-5 w-5" />
+                  <FontAwesomeIcon icon={faGithub} className="h-5 w-5" />
                 </Link>
               </Button>
               <Button
@@ -760,7 +912,7 @@ export default function Home() {
                   target="_blank"
                   aria-label="LinkedIn"
                 >
-                  <Linkedin className="h-5 w-5" />
+                  <FontAwesomeIcon icon={faLinkedin} className="h-5 w-5" />
                 </Link>
               </Button>
               <Button
@@ -770,7 +922,7 @@ export default function Home() {
                 className="text-white hover:bg-white/10 rounded-full"
               >
                 <Link href="mailto:dalbertw@ad.unc.com" target="_blank" aria-label="Email">
-                  <Mail className="h-5 w-5" />
+                  <FontAwesomeIcon icon={faEnvelope} className="h-5 w-5" />
                 </Link>
               </Button>
             </div>
