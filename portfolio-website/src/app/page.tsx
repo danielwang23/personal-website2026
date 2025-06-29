@@ -392,59 +392,93 @@ export default function Home() {
 
   const projects = [
     {
+      id: "0",
+      title: "SWIFT Banking Simulator",
+      date: "Jun 2025 - Aug 2025",
+      description: "Deployed a SWIFT MT54X Message simulator for Fidelity's Agency Lending Team to automate testing of securities transactions.",
+      customIcon: `${basePath}/project-imgs/fid.png`,
+      imageUrl: `${basePath}/project-imgs/SWIFT.png`,
+      technologies: ["Spring Boot", "Java", "Oracle SQL", "IBM MQ", "AWS EKS"],
+    },
+    {
       id: "1",
-      title: "Machine Learning Classifier",
-      description:
-        "A machine learning model to classify images using TensorFlow and Python.",
-      githubUrl: "https://github.com/danielwang23",
-      imageUrl: `${basePath}/hero-imgs/ricowater.JPEG`,
-      technologies: ["Python", "TensorFlow", "Scikit-learn"],
+      title: "CSXL Website AI Study Buddy",
+      date: "Jan 2025 - May 2025",
+      description: "A full-stack AI-assisted study buddy feature for the UNC CSXL site used by more than 2,000+ CS students.",
+      githubUrl: "https://github.com/comp423-25s/csxl-team-f3",
+      imageUrl: `${basePath}/project-imgs/studybud.gif`,
+      technologies: ["Angular", "FastAPI", "SQLAlchemy", "OpenAI API", "OKD Kubernetes"],
     },
     {
       id: "2",
-      title: "Personal Finance Dashboard",
+      title: "Milwaukee Bucks NBA Ticket Plan Strategies",
+      date: "Feb 2025",
       description:
-        "Interactive dashboard for tracking personal finances and investments.",
-      githubUrl: "https://github.com/danielwang23",
+        "2 Place Hackathon predictive analytics solution and business model for identifying behavior for newly introduced season ticket plans.",
+      githubUrl: "https://www.nba.com/bucks/hackathon?trk=public_post_main-feed-card-text",
       imageUrl:
-        `${basePath}/hero-imgs/backgroundmountain.jpeg`,
-      technologies: ["React", "D3.js", "Firebase"],
+        `${basePath}/project-imgs/buckshack.png`,
+      technologies: ["Python", "Pandas", "Matplotlib", "NumPy"],
     },
     {
       id: "3",
-      title: "Social Media Analytics Tool",
+      title: "Traveling Tourists Problem",
+      date: "Oct 2024",
       description:
-        "Tool for analyzing social media engagement and audience demographics.",
-      githubUrl: "https://github.com/danielwang23",
-      imageUrl: `${basePath}/hero-imgs/koi.JPG`,
-      technologies: ["Python", "Flask", "MongoDB", "React"],
+        "1st Place CDC Hackathon Project: Optimized travel router itenerary",
+      githubUrl: "https://github.com/Traveling-Tourists/CarolinaDataChallenge2024",
+      imageUrl: `${basePath}/project-imgs/tourist.gif`,
+      technologies: ["Python", "Folium", "Streamlit", "Pandas", "RestAPI"],
+    },
+    {
+      id: "8",
+      title: "AKARI",
+      date: "Dec 2025",
+      description:
+        "Simple recreation of the popular game Akari.",
+      hideIcon: true,
+      imageUrl: `${basePath}/project-imgs/Akari.gif`,
+      technologies: ["Java", "Maven", "CSS"],
     },
     {
       id: "4",
-      title: "Mobile Fitness App",
+      title: "iMarket Product App",
+      date: "Aug - Sept 2024",
       description:
-        "A fitness tracking application with workout plans and progress tracking.",
-      githubUrl: "https://github.com/danielwang23",
-      imageUrl: `${basePath}/hero-imgs/ericgrad.JPG`,
-      technologies: ["React Native", "Firebase", "Node.js"],
+        "Mock shopping IOS App for saving favorites and adding items to shoppingcart.",
+      githubUrl: "https://github.com/danielwang23/iMarket",
+      imageUrl: `${basePath}/project-imgs/iMarket.gif`,
+      technologies: ["Swift", "SwiftUI", "RestAPI"],
     },
     {
       id: "5",
-      title: "E-commerce Recommendation Engine",
+      title: "AspireWave Motivational App",
+      date: "2024",
       description:
-        "Product recommendation system using collaborative filtering algorithms.",
-      githubUrl: "https://github.com/danielwang23",
-      imageUrl: `${basePath}/hero-imgs/southerns.JPEG`,
-      technologies: ["Python", "Pandas", "AWS", "SQL"],
+        "IOS App with Swift that provides a scrollable, interactive view of motivational quotes for users with the ZenQuotes API.",
+      githubUrl: "https://github.com/danielwang23/AspireWave",
+      imageUrl: `${basePath}/project-imgs/aspire.gif`,
+      technologies: ["Swift", "SwiftUI", "RestAPI"],
     },
     {
       id: "6",
-      title: "Blockchain Voting System",
+      title: "Predicting High-Risk Wildfire Zones",
+      date: "Oct 2023",
       description:
         "Secure voting system built on blockchain technology for transparent elections.",
-      githubUrl: "https://github.com/danielwang23",
-      imageUrl: `${basePath}/about-img/headshotCroppedMore.jpg`,
-      technologies: ["Solidity", "Ethereum", "Web3.js", "React"],
+      githubUrl: "https://github.com/sarah-e-c/carolinaDataChallenge",
+      imageUrl: `${basePath}/project-imgs/wildfire.png`,
+      technologies: ["Python", "Tableau", "Scikit-learn", "Pandas", "NumPy"],
+    },
+    {
+      id: "7",
+      title: "Tennis Program Tracker",
+      date: "2023",
+      description:
+        "High School tennis website to provide updates on match schedules, player statistics, and team news.",
+      hideIcon: true,
+      imageUrl: `${basePath}/project-imgs/usc_tennis.jpeg`,
+      technologies: ["Javascript", "SQL", "HTML", "CSS"],
     },
   ];
   // ------------------------------------------------------------------------------
@@ -853,11 +887,15 @@ export default function Home() {
                 key={project.id}
                 id={project.id}
                 title={project.title}
+                date={project.date}
                 description={project.description}
                 githubUrl={project.githubUrl}
                 imageUrl={project.imageUrl}
                 technologies={project.technologies}
-              />
+                customIcon={project.customIcon}
+                hideIcon={project.hideIcon}
+              >
+              </ProjectCard>
             ))}
           </div>
         </div>
