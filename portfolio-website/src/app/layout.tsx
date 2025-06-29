@@ -1,4 +1,3 @@
-import { TempoInit } from "@/components/tempo-init";
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import Script from "next/script";
@@ -7,8 +6,8 @@ import "./globals.css";
 const ubuntu = Ubuntu({ subsets: ["latin"], weight: ["300", "400", "500", "700"] });
 
 export const metadata: Metadata = {
-  title: "Tempo - Modern SaaS Starter",
-  description: "A modern full-stack starter template powered by Next.js",
+  title: "Daniel Wang Portfolio",
+  description: "My portfolio website highlighting strengths, skills, and a little about me",
 };
 
 export default function RootLayout({
@@ -20,11 +19,25 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+        <Script id="global-error-handler" strategy="beforeInteractive">
+          {`
+            window.addEventListener('error', event => {
+              console.error('Global error caught:', event.error);
+              // TODO: send to your logging endpoint, e.g.:
+              // fetch('/api/log', { method: 'POST', body: JSON.stringify({ message: event.error.message, stack: event.error.stack }) });
+            });
+
+            window.addEventListener('unhandledrejection', event => {
+              console.error('Unhandled promise rejection:', event.reason);
+              // TODO: send to your logging endpoint similarly
+            });
+          `}
+        </Script>
       </head>
-      <Script src="https://api.tempolabs.ai/proxy-asset?url=https://storage.googleapis.com/tempo-public-assets/error-handling.js" />
+
       <body className={ubuntu.className}>
         {children}
-        <TempoInit />
       </body>
     </html>
   );
