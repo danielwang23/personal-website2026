@@ -27,6 +27,7 @@ import { faBasketball, faCamera, faGuitar, faLeaf, faCode, faTableTennisPaddleBa
 import { FaPython, FaJsSquare, FaJava, FaReact, FaNodeJs, FaGitAlt, FaDocker, FaAws, FaFigma, FaSwift, FaHtml5, FaCss3, FaAngular } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiDjango, SiCplusplus, SiR, SiC, SiXcode, SiKubernetes, SiVim, SiPostgresql, SiMysql, SiPandas, SiNumpy, SiScikitlearn, SiPytorch, SiSpringboot, SiJunit5 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
+import workTimelineStyles from './WorkTimeline.module.css';
 
 const basePath = "/personal-website2026";
 
@@ -334,7 +335,7 @@ export default function Home() {
   const interests = [
     { name: "Photography", icon: `${basePath}/hobbies/cam-logo2.png`, link: "https://www.instagram.com/danielwangphotography/", type: "image", size: "w-12 h-12" },
     { name: "Guitar", icon: `${basePath}/hobbies/guitar.png`, type: "image", size: "w-10 h-10" },
-    { name: "Tennis", icon: `${basePath}/hobbies/utrlogo.png`, link: "https://app.utrsports.net/search?sportTypes=tennis,pickleball&type=players&startDate=06/17/2025&utrMax=16&utrMin=1&utrTeamType=singles", type: "image", size: "w-10 h-10" },
+    { name: "Tennis", icon: `${basePath}/hobbies/utrlogo.png`, link: "https://app.utrsports.net/profiles/838346", type: "image", size: "w-10 h-10" },
     { name: "Running", icon: `${basePath}/hobbies/strava.png`, link: "https://www.strava.com/activities/14222755631/overview", type: "image", size: "w-8 h-8" },
     { name: "Travel Vlogging", icon: `${basePath}/hobbies/yt-logo.webp`, link: "https://www.youtube.com/@DanielWang6", type: "image", size: "w-8 h-8" },
   ];
@@ -345,27 +346,63 @@ export default function Home() {
     {
       type: "education",
       institution: "University of North Carolina at Chapel Hill",
-      role: "B.S. Computer Science & Data Science",
-      period: "2020 - 2024",
+      role: "B.S. Computer Science, B.S. Data Science",
+      period: "Aug 2023 - May 2027",
       description:
-        "Double major with focus on machine learning and software engineering",
+        "Rising Junior at UNC Chapel Hill.",
     },
     {
       type: "work",
-      institution: "Tech Company A",
-      role: "Software Engineering Intern",
-      period: "Summer 2023",
-      description: "Developed full-stack applications using React and Node.js",
+      institution: "Fidelity Investments",
+      role: "Full Stack Software Engineering Intern",
+      period: "June 2025 - Aug 2025",
+      description: "Developed a SWIFT banking message simulator for Fidelity's Agency Lending team",
+      logo: `${basePath}/company-logos/fidelity.png`,
     },
     {
       type: "work",
-      institution: "Research Lab",
-      role: "Undergraduate Researcher",
-      period: "2022 - 2023",
-      description: "Conducted data analysis and machine learning research",
+      institution: "Epic Hire",
+      role: "Data Science Intern",
+      period: "Sept 2024 - Dec 2024",
+      description: "Created a resume-matching algorithm with Python by fine-tuning Hugging Face's JobBERT NLP Transformer on candidate data to provide data-driven job recommendations in Epic Hire's hiring platform",
+      logo: `${basePath}/company-logos/epichire.png`,
     },
+    {
+      type: "work",
+      institution: "App Team Carolina",
+      role: "IOS Apprentice Programmer",
+      period: "Aug 2024 - Dec 2024",
+      description: "Applying mobile development practices in Swift/SwiftUI for user design, debugging, and code optimization",
+      logo: `${basePath}/company-logos/appteam.jpeg`,
+    },
+    {
+      type: "work",
+      institution: "UNC Chapel Hill Department of Biostatistics",
+      role: "Undergraduate Research Assistant",
+      period: "June 2024 - Aug 2024",
+      description: "Examined genetic sequencing data and performed statistical regression tests to identify significant genetic patterns and trends in infected cells under Dr. Fei Zou",
+      logo: `${basePath}/company-logos/unc.png`,
+    },
+    // {
+    //   type: "work",
+    //   institution: "Empty",
+    //   role: "Undergraduate",
+    //   period: "2022 - 2023",
+    //   description: "Conducted data analysis and machine learning research",
+    // },
+    // {
+    //   type: "work",
+    //   institution: "Empty",
+    //   role: "Undergraduate",
+    //   period: "2022 - 2023",
+    //   description: "Conducted data analysis and machine learning research",
+    // },
   ];
   
+  // Split experiences
+  const educationExperiences = experiences.filter(exp => exp.type === "education");
+  const workExperiences = experiences.filter(exp => exp.type === "work");
+
   // =========================================
   // ==================CLUBS==================
 
@@ -784,44 +821,59 @@ export default function Home() {
               <div className="h-0.5 bg-gray-300 flex-grow"></div>
             </div>
           </div>
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-4 md:left-1/2 h-full w-0.5 bg-[#4B9CD3] transform -translate-x-1/2"></div>
-
-            {/* Experience items */}
-            {experiences.map((exp, index) => (
-              <div key={index} className="mb-12 relative">
-                <div
-                  className={`flex flex-col md:flex-row ${index % 2 === 0 ? "md:flex-row-reverse" : ""}`}
-                >
-                  <div className="md:w-1/2 p-4">
-                    <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                      <Badge
-                        className={
-                          exp.type === "education"
-                            ? "bg-[#13294B]"
-                            : "bg-[#4B9CD3]"
-                        }
-                      >
-                        {exp.type === "education" ? "Education" : "Work"}
-                      </Badge>
-                      <h3 className="text-xl font-bold mt-2">
-                        {exp.institution}
-                      </h3>
-                      <h4 className="text-lg font-medium text-gray-700">
-                        {exp.role}
-                      </h4>
-                      <p className="text-sm text-gray-500 mb-2">{exp.period}</p>
-                      <p className="text-gray-600">{exp.description}</p>
-                    </div>
-                  </div>
-                  <div className="md:w-1/2 relative">
-                    {/* Timeline node */}
-                    <div className="absolute left-4 md:left-0 top-6 w-6 h-6 rounded-full bg-[#4B9CD3] border-4 border-white shadow md:transform md:translate-x-[-50%]"></div>
+          {/* Education Timeline */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold mb-4 text-[#4B9CD3]">Education</h3>
+            <div className="flex items-center space-x-8 overflow-x-auto">
+              {educationExperiences.map((exp, idx) => (
+                <div key={idx} className={workTimelineStyles['education-card'] + " flex items-center"}>
+                  <img
+                    src={`${basePath}/company-logos/unc.png`}
+                    alt="UNC Logo"
+                    className="w-12 h-12 rounded-lg mr-4"
+                    style={{ objectFit: 'contain' }}
+                  />
+                  <div>
+                    <h4 className="font-bold">{exp.institution}</h4>
+                    <div className="text-sm text-gray-700">{exp.role}</div>
+                    <div className="text-xs text-gray-500">{exp.period}</div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+          {/* Work Timeline */}
+          <div>
+            <h3 className="text-[2rem] font-bold mb-4 text-[#4B9CD3] text-center">Work Experience</h3>
+            <div className={workTimelineStyles['vertical-timeline']}>
+              {workExperiences.map((exp, idx) => (
+                <div key={idx} className={workTimelineStyles['timeline-item']}>
+                  <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                    <div className={workTimelineStyles['timeline-dot']}></div>
+                    <div className={workTimelineStyles['timeline-date']} style={{ marginLeft: 48 }}>
+                      {exp.period}
+                    </div>
+                  </div>
+                  <div className={workTimelineStyles['timeline-content']}>
+                    <div className={workTimelineStyles['timeline-institution-row']}>
+                      {idx % 2 === 0 && exp.logo && (
+                        <img src={exp.logo} alt={exp.institution + ' logo'} className={workTimelineStyles['timeline-logo']} />
+                      )}
+                      <h4 className={
+                        workTimelineStyles['timeline-institution'] +
+                        ' font-bold text-lg mb-1' +
+                        (idx % 2 === 0 ? ' ' + workTimelineStyles['timeline-institution-odd'] : '')
+                      } style={idx % 2 === 0 ? { flex: 1 } : {}}>{exp.institution}</h4>
+                      {idx % 2 === 1 && exp.logo && (
+                        <img src={exp.logo} alt={exp.institution + ' logo'} className={workTimelineStyles['timeline-logo']} />
+                      )}
+                    </div>
+                    <div className={workTimelineStyles['timeline-role'] + " text-sm mb-1"}>{exp.role}</div>
+                    <div className={workTimelineStyles['timeline-description'] + " text-sm"}>{exp.description}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

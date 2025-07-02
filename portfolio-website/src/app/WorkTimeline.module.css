@@ -1,0 +1,231 @@
+.work-timeline-container {
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 2rem 0;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: #38bdf8 #23272f;
+}
+
+
+
+.work-timeline-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.work-timeline-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
+  border-radius: 8px;
+}
+
+.work-timeline-container::-webkit-scrollbar-track {
+  background: #23272f;
+  border-radius: 8px;
+}
+
+.vertical-timeline {
+  position: relative;
+  margin: 0 auto;
+  padding: 2rem 0;
+  width: 100%;
+  max-width: 900px;
+}
+
+.timeline-item {
+  position: relative;
+  width: 50%;
+  padding: 2rem 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  top: 0.5rem;
+  left: 100%;
+  transform: translateX(0%);
+  width: 21px;
+  height: 21px;
+  background: #38bdf8;
+  border: 3px solid #38bdf8;
+  border-radius: 50%;
+  box-shadow: 0 0 25px 5px #38bdf8, 0 0 0 2px #38bdf8;
+  z-index: 2;
+}
+
+.timeline-content {
+  /* background: #fffdf7; */
+  background: #ffffff;
+
+  border: 2px solid #38bdf8;
+  border-radius: 2rem;
+  padding: 1.5rem 2.5rem;
+  color: #fff;
+  box-shadow: 0 0 10px #38bdf8;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+
+.timeline-content:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #38bdf8;
+}
+
+.timeline-date {
+  color: #38bdf8;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  height: 2rem; /* match dot height for vertical centering */
+}
+
+.timeline-item:nth-child(odd) .timeline-date {
+  margin-right: 48px;
+}
+
+.timeline-item:nth-child(even) .timeline-date {
+  margin-left: 48px;
+}
+
+/* Center vertical line */
+.vertical-timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 100%;
+  background: #38bdf8;
+  z-index: 1;
+  
+}
+
+/* Odd: left, Even: right */
+.timeline-item:nth-child(odd) {
+  
+  left: 0;
+  text-align: right;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.timeline-item:nth-child(even) {
+  left: 50%;
+  text-align: left;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+  margin-right: 40px;
+  width: 100%;
+  max-width: none;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+  margin-left: 40px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.timeline-item:nth-child(odd) .timeline-dot {
+  right: -11px;
+  left: auto;
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+  left: -11px;
+  right: auto;
+}
+
+.timeline-content .timeline-institution {
+  color: #00468c;
+  
+}
+
+.timeline-content .timeline-role {
+  color: rgb(125, 186, 252);
+  font-weight: 400;
+  font-style: italic
+}
+
+.timeline-content .timeline-description {
+  color: #686d78;
+  max-width: 600px;
+}
+
+.timeline-item:nth-child(odd) .timeline-institution {
+  text-align: right;
+  width: 100%;
+}
+
+
+/* Add company logo box styles */
+.timeline-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #ffffff;
+  /* box-shadow: 0 2px 8px rgba(30,58,138,0.10); */
+  /* display: flex; */
+  object-fit: contain;
+  position: static;
+  margin: 0 1rem 0 0;
+  
+}
+
+.timeline-item:nth-child(even) .timeline-institution-row {
+  justify-content: space-between;
+}
+
+.timeline-item:nth-child(even) .timeline-logo {
+  margin-left: auto;
+  margin-right: 0;
+  align-self: flex-start;
+}
+
+.timeline-item:nth-child(odd) .timeline-institution-row {
+  justify-content: space-between;      
+}
+
+.timeline-item:nth-child(odd) .timeline-logo {
+  margin-right: auto;
+  margin-left: 0;
+  align-self: flex-end;
+}
+
+/* Flex row for institution and logo */
+.timeline-institution-row {
+  display: flex;
+  align-items: center;
+}
+
+.timeline-item:nth-child(odd) .timeline-institution-row {
+  flex-direction: row;
+  justify-content: flex-end;
+  text-align: right;
+  width: 100%;
+}
+
+.timeline-item:nth-child(odd) .timeline-description {
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.timeline-item:nth-child(even) .timeline-description {
+  max-width: 800px;
+}
+
+.timeline-institution-odd {
+  text-align: right;
+  flex: 1;
+} 
