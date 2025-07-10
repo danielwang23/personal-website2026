@@ -30,7 +30,8 @@ import { VscVscode } from 'react-icons/vsc';
 import workTimelineStyles from './WorkTimeline.module.css';
 
 // BASE PATH to run application on production
-const basePath = "/personal-website2026";
+// const basePath = "/personal-website2026";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 // Home Screen animated icons ===================
 

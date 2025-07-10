@@ -15,6 +15,7 @@ const nextConfig = {
     },
     env: {
         NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || 'a2bef6ba-ec2c-4592-96eb-30819429ced7',
+        NEXT_PUBLIC_BASE_PATH: basePath,
     },
 };
 
