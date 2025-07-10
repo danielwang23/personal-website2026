@@ -13,6 +13,7 @@ interface ProjectCardProps {
   githubUrl?: string;
   customIcon?: string;
   hideIcon?: boolean;
+  cardColor?: string; // new prop
 }
 
 const ProjectCard = ({
@@ -25,16 +26,19 @@ const ProjectCard = ({
   githubUrl = "https://github.com",
   customIcon,
   hideIcon = false,
+  cardColor = "#fff",
 }: ProjectCardProps) => {
+  // Determine text color for contrast
+  const textColor = cardColor === '#FFFACD' || cardColor === '#FFDAC1' || cardColor === '#E2F0CB' || cardColor === '#B5EAD7' ? 'text-gray-800' : 'text-gray-900';
   return (
     <a href={githubUrl && !customIcon && !hideIcon ? githubUrl : undefined} target={githubUrl && !customIcon && !hideIcon ? "_blank" : undefined} rel={githubUrl && !customIcon && !hideIcon ? "noopener noreferrer" : undefined} className="block h-full">
-      <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-background border border-border">
+      <Card className={`overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-border`} style={{ background: cardColor }}>
         <div className="relative h-48 w-full overflow-hidden">
           <img src={imageUrl} alt={title} className="object-cover w-full h-full" />
         </div>
         <CardContent className="p-4">
           <div className="flex justify-between items-start mb-2">
-            <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+            <h3 className={`text-lg font-semibold ${textColor}`}>{title}</h3>
             {!hideIcon && (
               customIcon ? (
                 <img src={customIcon} alt="Custom Icon" className="h-8 w-8 object-contain" />
@@ -44,12 +48,10 @@ const ProjectCard = ({
             )}
           </div>
           {date && (
-            <p className="italic text-sm mb-1">{date}</p>
+            <p className={`italic text-sm mb-1 ${textColor}`}>{date}</p>
           )}
           {description && (
-            <p className="text-sm text-muted-foreground mb-3">
-              {description}
-            </p>
+            <p className={`text-sm mb-3 ${textColor}`}>{description}</p>
           )}
         </CardContent>
         <CardFooter className="p-4 pt-0 flex flex-wrap gap-2">

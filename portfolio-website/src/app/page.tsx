@@ -976,21 +976,36 @@ export default function Home() {
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                id={project.id}
-                title={project.title}
-                date={project.date}
-                description={project.description}
-                githubUrl={project.githubUrl}
-                imageUrl={project.imageUrl}
-                technologies={project.technologies}
-                customIcon={project.customIcon}
-                hideIcon={project.hideIcon}
-              >
-              </ProjectCard>
-            ))}
+            
+            {(() => {
+              const cardColors = [
+                '#92A8D1', // pastel blue
+                '#B5A8D1', // muted purple
+                '#B5EAD7', // pastel green
+                '#FFDAC1', // pastel peach
+                '#E2F0CB', // pastel light green
+                '#F7CAC9', // pastel pink
+                '#FFB7B2', // soft coral
+                '#B5EAD7', // mint
+                '#C7CEEA', // lavender
+                '#FFFACD', // lemon chiffon
+              ];
+              return projects.map((project, idx) => (
+                <ProjectCard
+                  key={project.id}
+                  id={project.id}
+                  title={project.title}
+                  date={project.date}
+                  description={project.description}
+                  githubUrl={project.githubUrl}
+                  imageUrl={project.imageUrl}
+                  technologies={project.technologies}
+                  customIcon={project.customIcon}
+                  hideIcon={project.hideIcon}
+                  cardColor={cardColors[idx % cardColors.length]}
+                />
+              ));
+            })()}
           </div>
         </div>
       </section>
