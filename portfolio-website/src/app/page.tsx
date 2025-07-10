@@ -578,6 +578,13 @@ export default function Home() {
   ];
   // ------------------------------------------------------------------------------
 
+  const isMobile = useIsMobile();
+
+  const fadeInVariants = {
+    hidden: { opacity: 0, transition: { duration: 0.3 } },
+    visible: { opacity: 1, transition: { duration: 0.8 } },
+  };
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -664,42 +671,64 @@ export default function Home() {
            </div>
            <div className="flex flex-col md:flex-row gap-8 items-start">
              <div className="flex-1">
-               <motion.p
-                 ref={ref1}
-                 variants={textVariants}
-                 initial="hidden"
-                 animate={inView1 ? "visible" : "hidden"}
-                 transition={{ delay: 0.1 }}
-                 className="text-lg mb-6"
-               >
-                 Hi! My name is Daniel Wang and I am currently a Junior at UNC Chapel Hill 
-                 double majoring in Computer Science and Data Science.
-               </motion.p>
-               <motion.p
-                 ref={ref2}
-                 variants={textVariants}
-                 initial="hidden"
-                 animate={inView2 ? "visible" : "hidden"}
-                 transition={{ delay: 0.2 }}
-                 className="text-lg mb-6"
-               >
-                 I enjoy tackling complex problems and turning the data surrounding us into
-                 actionable insights that drive impactful change. I am excited to expand on my skills in
-                 leveraging ML/NLP in software development and data analytics, as well as understand 
-                 financial risk management through data. 
-               </motion.p>
-               <motion.p
-                 ref={ref3}
-                 variants={textVariantsP3}
-                 initial="hidden"
-                 animate={inView3 ? "visible" : "hidden"}
-                 transition={{ delay: 0.2 }}
-                 className="text-lg mb-6"
-               >
-                 To me, data visualization is like photography—using the right lens and composition 
-                 to transform raw data into captivating stories. In my free time, I enjoy tennis, 
-                 traveling, playing guitar, photography, and social & outdoor activities. 
-               </motion.p>
+               {isMobile ? (
+                 <>
+                   <p className="text-base sm:text-lg mb-6">
+                     Hi! My name is Daniel Wang and I am currently a Junior at UNC Chapel Hill 
+                     double majoring in Computer Science and Data Science.
+                   </p>
+                   <p className="text-base sm:text-lg mb-6">
+                     I enjoy tackling complex problems and turning the data surrounding us into
+                     actionable insights that drive impactful change. I am excited to expand on my skills in
+                     leveraging ML/NLP in software development and data analytics, as well as understand 
+                     financial risk management through data. 
+                   </p>
+                   <p className="text-base sm:text-lg mb-6">
+                     To me, data visualization is like photography—using the right lens and composition 
+                     to transform raw data into captivating stories. In my free time, I enjoy tennis, 
+                     traveling, playing guitar, photography, and social & outdoor activities. 
+                   </p>
+                 </>
+               ) : (
+                 <>
+                   <motion.p
+                     ref={ref1}
+                     variants={textVariants}
+                     initial="hidden"
+                     animate={inView1 ? "visible" : "hidden"}
+                     transition={{ delay: 0.1 }}
+                     className="text-lg mb-6"
+                   >
+                     Hi! My name is Daniel Wang and I am currently a Junior at UNC Chapel Hill 
+                     double majoring in Computer Science and Data Science.
+                   </motion.p>
+                   <motion.p
+                     ref={ref2}
+                     variants={textVariants}
+                     initial="hidden"
+                     animate={inView2 ? "visible" : "hidden"}
+                     transition={{ delay: 0.2 }}
+                     className="text-lg mb-6"
+                   >
+                     I enjoy tackling complex problems and turning the data surrounding us into
+                     actionable insights that drive impactful change. I am excited to expand on my skills in
+                     leveraging ML/NLP in software development and data analytics, as well as understand 
+                     financial risk management through data. 
+                   </motion.p>
+                   <motion.p
+                     ref={ref3}
+                     variants={textVariantsP3}
+                     initial="hidden"
+                     animate={inView3 ? "visible" : "hidden"}
+                     transition={{ delay: 0.2 }}
+                     className="text-lg mb-6"
+                   >
+                     To me, data visualization is like photography—using the right lens and composition 
+                     to transform raw data into captivating stories. In my free time, I enjoy tennis, 
+                     traveling, playing guitar, photography, and social & outdoor activities. 
+                   </motion.p>
+                 </>
+               )}
 
                {/* Personal Interests Section */}
                <div className="mt-8">
@@ -1221,4 +1250,15 @@ export default function Home() {
       </footer>
     </div>
   );
+}
+
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = React.useState(false);
+  React.useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < breakpoint);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, [breakpoint]);
+  return isMobile;
 }
