@@ -19,7 +19,7 @@ import {
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faFilePdf, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
 // Framer Motion for animations below
 import { hover, motion, useInView, AnimatePresence } from 'framer-motion';
@@ -29,6 +29,7 @@ import { SiTypescript, SiNextdotjs, SiTailwindcss, SiDjango, SiCplusplus, SiR, S
 import { VscVscode } from 'react-icons/vsc';
 import workTimelineStyles from './WorkTimeline.module.css';
 
+// BASE PATH to run application on production
 const basePath = "/personal-website2026";
 
 // Home Screen animated icons ===================
@@ -58,40 +59,77 @@ function getRandomPositionAndColor(safeZone: { top: number; left: number; bottom
   return { top: `${top}%`, left: `${left}%`, color };
 }
 
-function RotatingWords({ words, color = 'white' }: { words: string[]; color?: string }) {
-  const [index, setIndex] = useState(0);
-  const [prevIndex, setPrevIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
+// function RotatingWords({ words, color = 'white' }: { words: string[]; color?: string }) {
+//   const [index, setIndex] = useState(0);
+//   const [prevIndex, setPrevIndex] = useState(0);
+//   const [animating, setAnimating] = useState(false);
+
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       setAnimating(true);
+//       setTimeout(() => {
+//         setPrevIndex(index);
+//         setIndex((prev) => (prev + 1) % words.length);
+//         setAnimating(false);
+//       }, 150); // animation duration
+//     }, 2000);
+//     return () => clearInterval(interval);
+//   }, [index, words.length]);
+
+//   return (
+//     // <span className="relative inline-block w-[7.5ch] h-[1.2em] align-middle">
+//     <span className="relative inline-block w-[7.5ch] h-[1.2em] align-middle overflow-visible" style={{ lineHeight: '1.2em' }}>
+//       <span
+//         className={`absolute left-0 top-0 w-full transition-all duration-400 ease-in-out ${animating ? '-translate-y-5 opacity-0' : 'translate-y-0 opacity-100'} font-bold`}
+//         key={prevIndex}
+//         style={{ willChange: 'transform, opacity', color }}
+//       >
+//         {words[prevIndex]}
+//       </span>
+//       <span
+//         className={`absolute left-0 top-0 w-full transition-all duration-25 ease-in-out ${animating ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'} font-bold`}
+//         key={index}
+//         style={{ willChange: 'transform, opacity', color }}
+//       >
+//         {words[index]}
+//       </span>
+//     </span>
+//   );
+// }
+
+function TypewriterWords({ words, color = "#98d6ff", typingSpeed = 100, pause = 1200 }: { words: string[]; color?: string; typingSpeed?: number; pause?: number }) {
+  const [displayed, setDisplayed] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setAnimating(true);
-      setTimeout(() => {
-        setPrevIndex(index);
-        setIndex((prev) => (prev + 1) % words.length);
-        setAnimating(false);
-      }, 150); // animation duration
-    }, 2000);
-    return () => clearInterval(interval);
-  }, [index, words.length]);
+    let timeout: ReturnType<typeof setTimeout>;
+    const currentWord = words[wordIndex];
+
+    if (!isDeleting && charIndex < currentWord.length) {
+      timeout = setTimeout(() => {
+        setDisplayed(currentWord.slice(0, charIndex + 1));
+        setCharIndex(charIndex + 1);
+      }, typingSpeed);
+    } else if (isDeleting && charIndex > 0) {
+      timeout = setTimeout(() => {
+        setDisplayed(currentWord.slice(0, charIndex - 1));
+        setCharIndex(charIndex - 1);
+      }, typingSpeed / 2);
+    } else if (!isDeleting && charIndex === currentWord.length) {
+      timeout = setTimeout(() => setIsDeleting(true), pause);
+    } else if (isDeleting && charIndex === 0) {
+      setIsDeleting(false);
+      setWordIndex((prev) => (prev + 1) % words.length);
+    }
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, wordIndex, words, typingSpeed, pause]);
 
   return (
-    // <span className="relative inline-block w-[7.5ch] h-[1.2em] align-middle">
-    <span className="relative inline-block w-[7.5ch] h-[1.2em] align-middle overflow-visible" style={{ lineHeight: '1.2em' }}>
-      <span
-        className={`absolute left-0 top-0 w-full transition-all duration-400 ease-in-out ${animating ? '-translate-y-5 opacity-0' : 'translate-y-0 opacity-100'} font-bold`}
-        key={prevIndex}
-        style={{ willChange: 'transform, opacity', color }}
-      >
-        {words[prevIndex]}
-      </span>
-      <span
-        className={`absolute left-0 top-0 w-full transition-all duration-25 ease-in-out ${animating ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'} font-bold`}
-        key={index}
-        style={{ willChange: 'transform, opacity', color }}
-      >
-        {words[index]}
-      </span>
+    <span style={{ color, fontWeight: "bold" }}>
+      {displayed}
+      <span className="animate-pulse">|</span>
     </span>
   );
 }
@@ -133,18 +171,18 @@ function FloatingIcons() {
   return (
     <>
       {/* Floating hero photos (underneath all icons/objects) */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+      {/* <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
         {floatingPhotos.map((photo, i) => {
-          // Determine direction: left-to-right or right-to-left
+          
+
           const isLTR = parseFloat(photo.endX) > parseFloat(photo.startX);
-          // Offset for wrap-around
+          
           const offset = isLTR ? '-100vw' : '+100vw';
-          // Helper to build offset x values
           const offsetX = (x: string) => `calc(${x} ${isLTR ? '-' : '+'} 100vw)`;
           return (
-            <React.Fragment key={photo.src}>
+            <React.Fragment key={photo.src}> */}
               {/* Main image */}
-              <motion.img
+              {/* <motion.img
                 src={photo.src}
                 alt="Floating Hero"
                 style={{
@@ -167,10 +205,10 @@ function FloatingIcons() {
                     ease: 'linear',
                     delay: photo.delay || 0,
                   },
-                }}
-              />
+                }} */}
+              {/* /> */}
               {/* Offset image for seamless wrap */}
-              <motion.img
+              {/* <motion.img
                 src={photo.src}
                 alt="Floating Hero"
                 style={{
@@ -193,12 +231,12 @@ function FloatingIcons() {
                     ease: 'linear',
                     delay: photo.delay || 0,
                   },
-                }}
-              />
+                }} */}
+              {/* />
             </React.Fragment>
           );
         })}
-      </div>
+      </div> */}
       {/* Icons and other floating objects above photos */}
       <div className="absolute inset-0 w-full h-full pointer-events-none z-10">
         {/* FontAwesome icons in fixed positions */}
@@ -220,6 +258,7 @@ function FloatingIcons() {
             <FontAwesomeIcon icon={obj.icon} size="2x" color={obj.color} style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.15))' }} />
           </motion.div>
         ))}
+        
         {/* Google font icons in fixed, strategic positions */}
         {googleFloatingIcons.map((obj, i) => (
           <motion.div
@@ -408,22 +447,40 @@ export default function Home() {
 
   const clubs = [
     {
-      name: "CS Club",
-      description:
-        "Undergraduate computer science organization focused on professional development",
-      image: `${basePath}/hero-imgs/ricowater.JPEG`,
+      name: "App Team Carolina",
+      role: "IOS Apprentice Developer",
+      description: "Applying and learning advanced IOS skills for App Development and Production",
+      image: `${basePath}/clubs/appteamlogo.jpeg`,
+      link: "https://appteamcarolina.com/",
     },
     {
-      name: "Data Science Society",
-      description:
-        "Student group exploring data science applications and hosting workshops",
-      image: `${basePath}/hero-imgs/koi.JPG`,
+      name: "Kappa Theta Pi",
+      role: "Community Service Director",
+      description: "Professional Co-Ed Technology and Computer Science Organization at UNC",
+      image: `${basePath}/clubs/ktp_unc_logo.jpeg`,
+      roleColor: "text-blue-600",
+      link: "https://www.ktpunc.com/",
     },
     {
-      name: "Hackathon Team",
-      description:
-        "Competitive coding team participating in hackathons across the country",
-      image: `${basePath}/hero-imgs/ericgrad.JPG`,
+      name: "AI@UNC",
+      role: "",
+      description: "Gaining hands-on practice working with AI libraries and frameworks & understanding the of uses of AI",
+      image: `${basePath}/clubs/aiclubunc.jpeg`,
+      link: "https://heellife.unc.edu/organization/aiunc",
+    },
+    {
+      name: "UNC Club Tennis",
+      role: "",
+      description: "Among the Top 15 Players on the UNC Club Tennis team, traveling to numerous tournaments across different states",
+      image: `${basePath}/clubs/Club_Tennis.JPG`,
+      link: "https://heellife.unc.edu/organization/club-tennis",
+    },
+    {
+      name: "Asian American Students Association",
+      role: "",
+      description: "Engaging with students to help promote Asian culture & traditions while fostering community with students of Asian descent",
+      image: `${basePath}/clubs/AASA_UNC.jpeg`,
+      link: "https://heellife.unc.edu/organization/aasa",
     },
   ];
 
@@ -494,7 +551,7 @@ export default function Home() {
       description:
         "IOS App with Swift that provides a scrollable, interactive view of motivational quotes for users with the ZenQuotes API.",
       githubUrl: "https://github.com/danielwang23/AspireWave",
-      imageUrl: `${basePath}/project-imgs/aspire.gif`,
+      imageUrl: `${basePath}/project-imgs/Aspire.gif`,
       technologies: ["Swift", "SwiftUI", "RestAPI"],
     },
     {
@@ -540,15 +597,22 @@ export default function Home() {
             initial={{ opacity: 0, y: -20 }}
             animate={nameInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-extrabold mb-5 leading-snug pb-2 text-center bg-gradient-to-r from-[#7dd3fc] via-blue to-[#fdba74] bg-clip-text text-transparent"
+            className="ripple-text text-5xl md:text-7xl font-extrabold mb-5 leading-snug pb-2 text-center"
+
+            // {Old color and animation Styles for my name Daniel Wang}
+            // className="text-5xl md:text-7xl font-extrabold mb-5 leading-snug pb-2 text-center bg-gradient-to-r from-[#7dd3fc] via-blue to-[#fdba74] bg-clip-text text-transparent"
+            // className="gif-text text-5xl md:text-7xl font-extrabold mb-5 leading-snug pb-2 text-center"
           >
             Daniel Wang
           </motion.h1>
 
         
           <div className="flex items-center justify-center text-2xl md:text-3xl font-light mb-8">
-            <span style={{ color: '#113281' }}>I'm a&nbsp;</span>
-            <RotatingWords words={["Student", "Athlete", "Creator", "Developer"]} color="#98d6ff" />
+            <span style={{ color: '#ffffff' }}>I'm a&nbsp;</span>
+            {/* <span style={{ color: '#113281' }}>I'm a&nbsp;</span> this is navy text */}
+
+            {/* <RotatingWords words={["Student", "Athlete", "Creator", "Developer"]} color="#98d6ff" /> */}
+            <TypewriterWords words={["Student", "Athlete", "Creator", "Developer"]} color="#98d6ff" />
           </div>
           <div className="flex gap-6 justify-center mt-0.2">
             <a href="https://github.com/danielwang23" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
@@ -563,7 +627,17 @@ export default function Home() {
           </div>
         </div>
         {/* Overlay for darkening background for readability */}
-        <div className="absolute inset-0 bg-sky-100 bg-opacity-50 -z-10" />
+        {/* <div className="absolute inset-0 bg-sky-100 bg-opacity-50 -z-10" /> */}
+        <div
+          className="absolute inset-0 w-full h-full -z-10 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${basePath}/hero-imgs/backgroundmountain.jpeg)`,
+            // Optionally add a dark overlay for readability:
+            backgroundBlendMode: 'multiply',
+            backgroundColor: 'rgba(200, 207, 228, 0.3)',
+          }}
+        />
+        <div className="absolute inset-0 bg-gray-500 bg-opacity-50 -z-10" />
       </section>
 
 
@@ -739,73 +813,81 @@ export default function Home() {
          </div>
        </section>
 
-      {/* TECH STACK SECTION================================================ */}
+      {/* INTERESTS & CLUBS SECTION================================================ */}
+      {/* ============================================================================= */}
 
-      {/* Tech Stack Section */}
-      <section id="tech-stack" className="py-16 px-4 md:px-8 bg-gray-50">
-        <div className="container mx-auto max-w-6xl">
+      {/* Interests & Clubs Section */}
+      <section id="interests" className="py-8 px-4 md:px-8 bg-gray-50">
+        <div className="w-full max-w-screen-xl mx-auto">
           <div className="flex flex-col items-center mb-8">
-            <h2 className="text-3xl font-bold text-[#13294B] text-center">Technology I Use</h2>
-            <div className="flex justify-center items-center w-3/4 max-w-[200px] mx-auto mt-2">
+            <h2 className="text-3xl font-bold text-[#13294B] text-center">Clubs!</h2>
+            <div className="flex justify-center items-center w-3/4 max-w-[80px] mx-auto mt-2">
               <div className="h-0.5 bg-gray-300 flex-grow"></div>
               <div className="h-1 bg-[#98d6ff] w-1/3"></div>
               <div className="h-0.5 bg-gray-300 flex-grow"></div>
             </div>
           </div>
-          <div className="mb-10">
-            <p>Some of my favorite languages, frameworks, and tools I frequently use to build fun projects.</p>
-          </div>
-
-          <div className="mb-2">
-            <h3 className="text-xl font-semibold mb-2 text-[#4B9CD3]">
-              Languages
-            </h3>
-            <div className="flex flex-wrap gap-1">
-              {techStack.languages.map((tech) => (
-                <div
-                  key={tech.name}
-                  className="flex items-center flex-row p-2" // hover:shadow-md transition-all duration-200
-                >
-                  <div className="text-4xl mr-2">{tech.icon}</div>
-                  <p className="text-sm font-medium text-gray-800">{tech.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="mb-2">
-            <h3 className="text-xl font-semibold mb-2 text-[#4B9CD3]">
-              Frameworks & Libraries
-            </h3>
-            <div className="flex flex-wrap gap-1">
-              {techStack.frameworks.map((tech) => (
-                <div
-                  key={tech.name}
-                  className="flex items-center flex-row p-2" 
-                >
-                  <div className="text-4xl mr-2">{tech.icon}</div>
-                  <p className="text-sm font-medium text-gray-800">{tech.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-semibold mb-2 text-[#4B9CD3]">Dev Tools</h3>
-            <div className="flex flex-wrap gap-1">
-              {techStack.tools.map((tech) => (
-                <div
-                  key={tech.name}
-                  className="flex items-center flex-row p-2"
-                >
-                  <div className="text-4xl mr-2">{tech.icon}</div>
-                  <p className="text-sm font-medium text-gray-800">{tech.name}</p>
-                </div>
-              ))}
+          <div className="mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 px-4">
+              {clubs.map((club) => {
+                const roleColor = club.roleColor ? club.roleColor : "text-[#a855f7]";
+                const cardContent = (
+                  <Card
+                    key={club.name}
+                    className="relative w-full h-64 overflow-hidden hover:shadow-lg transition-shadow flex flex-col items-center justify-start px-6 py-4 rounded-1xl group"
+                  >
+                    {/* Hover overlay */}
+                    {club.link && (
+                      <div className="absolute inset-0 bg-blue-100 bg-opacity-80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 backdrop-blur-sm">
+                        <span className="text-blue-400 font-bold text-lg">Learn more!</span>
+                      </div>
+                    )}
+                    {/* Top half: club image */}
+                    <div className="w-full h-20 flex items-center justify-center mb-0 z-0">
+                      <img
+                        src={club.image}
+                        alt={club.name}
+                        className={
+                          club.name === "UNC Club Tennis"
+                            ? "w-16 h-16 object-cover rounded-full"
+                            : "w-16 h-16 object-contain rounded-full"
+                        }
+                        style={{ maxWidth: '80%' }}
+                      />
+                    </div>
+                    {/* Bottom half: text content */}
+                    <div className="flex flex-col items-center justify-center flex-1 w-full text-center z-0">
+                      <h4 className="text-base font-bold mb-1">{club.name}</h4>
+                      {club.role && (
+                        <div className={`text-xs italic mb-1 ${roleColor}`}>
+                          {club.role}
+                        </div>
+                      )}
+                      <p className="text-xs text-gray-700">{club.description}</p>
+                    </div>
+                  </Card>
+                );
+                if (club.link) {
+                  return (
+                    <a
+                      key={club.name}
+                      href={club.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      {cardContent}
+                    </a>
+                  );
+                } else {
+                  return cardContent;
+                }
+              })}
             </div>
           </div>
         </div>
       </section>
+      
 
       {/* EXPERIENCE SECTION================================================ */}
       {/* ================================================================== */}
@@ -878,52 +960,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* INTERESTS & CLUBS SECTION================================================ */}
-      {/* ============================================================================= */}
-
-      {/* Interests & Clubs Section */}
-      <section id="interests" className="py-16 px-4 md:px-8 bg-gray-50">
-        <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col items-center mb-8">
-            <h2 className="text-3xl font-bold text-[#13294B] text-center">Clubs!</h2>
-            <div className="flex justify-center items-center w-3/4 max-w-[80px] mx-auto mt-2">
-              <div className="h-0.5 bg-gray-300 flex-grow"></div>
-              <div className="h-1 bg-[#98d6ff] w-1/3"></div>
-              <div className="h-0.5 bg-gray-300 flex-grow"></div>
-            </div>
-          </div>
-          <div className="mb-12">
-            {/* <h3 className="text-xl font-semibold mb-6 text-[#4B9CD3]">Clubs</h3> */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {clubs.map((club) => (
-                <Card
-                  key={club.name}
-                  className="overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <div className="h-32 overflow-hidden">
-                    <img
-                      src={club.image}
-                      alt={club.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <CardContent className="p-4">
-                    <h4 className="text-lg font-bold mb-2">{club.name}</h4>
-                    <p className="text-gray-600">{club.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ============================================PROJECTS============================================ */}
+    
+    {/* ============================================PROJECTS============================================ */}
       {/* ================================================================================================ */}
 
       {/* Projects Section */}
-      <section id="projects" className="py-16 px-4 md:px-8 bg-white">
+      <section id="projects" className="py-16 px-4 md:px-8 bg-gray-50">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col items-center mb-8">
             <h2 className="text-3xl font-bold text-[#13294B] text-center">Projects</h2>
@@ -953,89 +995,159 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============================================CONTACT============================================ */}
-      <section id="contact" className="py-16 px-4 md:px-8 bg-gray-50">
+      {/* TECH STACK SECTION================================================ */}
+
+      {/* Tech Stack Section */}
+      <section id="tech-stack" className="py-16 px-4 md:px-8 bg-white">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col items-center mb-8">
-            <h2 className="text-3xl font-bold text-[#13294B] text-center">Contact Me</h2>
-            <div className="flex justify-center items-center w-3/4 max-w-[140px] mx-auto mt-2">
+            <h2 className="text-3xl font-bold text-[#13294B] text-center">Technology I Use</h2>
+            <div className="flex justify-center items-center w-3/4 max-w-[200px] mx-auto mt-2">
               <div className="h-0.5 bg-gray-300 flex-grow"></div>
               <div className="h-1 bg-[#98d6ff] w-1/3"></div>
               <div className="h-0.5 bg-gray-300 flex-grow"></div>
             </div>
           </div>
-          <div className="max-w-2xl mx-auto">
-            <Card className="p-6">
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 gap-6">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B9CD3]"
-                      placeholder="Your name"
-                      required
-                    />
-                  </div>
+          <div className="mb-10">
+            <p>Some of my favorite languages, frameworks, and tools I frequently use to build fun projects.</p>
+          </div>
 
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B9CD3]"
-                      placeholder="your.email@example.com"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B9CD3]"
-                      placeholder="Your message"
-                      required
-                    ></textarea>
-                  </div>
+          <div className="mb-2">
+            <h3 className="text-xl font-semibold mb-2 text-[#4B9CD3]">
+              Languages
+            </h3>
+            <div className="flex flex-wrap gap-1">
+              {techStack.languages.map((tech) => (
+                <div
+                  key={tech.name}
+                  className="flex items-center flex-row p-2" // hover:shadow-md transition-all duration-200
+                >
+                  <div className="text-4xl mr-2">{tech.icon}</div>
+                  <p className="text-sm font-medium text-gray-800">{tech.name}</p>
                 </div>
+              ))}
+            </div>
+          </div>
 
-                <div>
-                  <Button
-                    type="submit"
-                    className="w-full bg-[#4B9CD3] hover:bg-[#13294B]"
-                  >
-                    Send Message
-                  </Button>
+          <div className="mb-2">
+            <h3 className="text-xl font-semibold mb-2 text-[#4B9CD3]">
+              Frameworks & Libraries
+            </h3>
+            <div className="flex flex-wrap gap-1">
+              {techStack.frameworks.map((tech) => (
+                <div
+                  key={tech.name}
+                  className="flex items-center flex-row p-2" 
+                >
+                  <div className="text-4xl mr-2">{tech.icon}</div>
+                  <p className="text-sm font-medium text-gray-800">{tech.name}</p>
                 </div>
-              </form>
-            </Card>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-semibold mb-2 text-[#4B9CD3]">Dev Tools</h3>
+            <div className="flex flex-wrap gap-1">
+              {techStack.tools.map((tech) => (
+                <div
+                  key={tech.name}
+                  className="flex items-center flex-row p-2"
+                >
+                  <div className="text-4xl mr-2">{tech.icon}</div>
+                  <p className="text-sm font-medium text-gray-800">{tech.name}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
+
+      {/* ============================================CONTACT============================================ */}
+      <section id="contact" className="py-16 px-4 md:px-8 bg-gray-50">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex flex-col items-center mb-8">
+            <h2 className="text-3xl font-bold text-[#13294B] text-center">Contact</h2>
+            <div className="flex justify-center items-center w-3/4 max-w-[100px] mx-auto mt-2">
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+              <div className="h-1 bg-[#98d6ff] w-1/3"></div>
+              <div className="h-0.5 bg-gray-300 flex-grow"></div>
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row gap-8 contact-container">
+            {/* Left: Contact Info */}
+            <div className="flex-1 contact-leftdiv space-y-6">
+              <p>
+                <FontAwesomeIcon icon={faLocationDot} className="mr-2 text-blue-400" />
+                <span className="font-bold">Location:</span> Chapel Hill, NC
+              </p>
+              <p>
+                <FontAwesomeIcon icon={faEnvelope} className="mr-2 text-blue-400" />
+                <span className="font-bold">Email:</span>{" "}
+                <a href="mailto:dalbertw@unc.edu" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">
+                  dalbertw@unc.edu
+                </a>
+              </p>
+              <p>
+                <FontAwesomeIcon icon={faPhone} className="mr-2 text-blue-400" />
+                <span className="font-bold">Phone:</span> (412) 628-4603
+              </p>
+            </div>
+            {/* Right: Contact Form */}
+            <div className="flex-1 contact-rightdiv flex flex-col gap-6">
+              <section className="contactform-content">
+                <div className="contact-left-title mb-2">
+                  <h2 className="text-xl font-bold text-blue-600">Get in touch</h2>
+                  <hr className="border-blue-400 w-24" />
+                </div>
+                <form
+                  id="contact-form"
+                  action="https://api.web3forms.com/submit"
+                  method="POST"
+                  className="space-y-4"
+                >
+                  <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY} />
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Full Name"
+                    className="w-full rounded-full px-4 py-2 bg-gray-100"
+                    required
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="your.email@example.com"
+                    className="w-full rounded-full px-4 py-2 bg-gray-100"
+                    required
+                  />
+                  <textarea
+                    name="message"
+                    placeholder="Your Message"
+                    className="w-full rounded-xl px-4 py-2 bg-gray-100"
+                    rows={5}
+                    required
+                  ></textarea>
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-400 hover:bg-blue-600 text-white font-semibold rounded-full py-2 transition-colors flex items-center justify-center gap-2"
+                  >
+                    Send Message
+                    <span>
+                      <FontAwesomeIcon icon={faEnvelope} />
+                    </span>
+                  </button>
+                </form>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* Footer */}
-      <footer className="bg-[#13294B] text-white py-8 px-4">
+      <footer className="bg-blue-300 text-white py-8 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">

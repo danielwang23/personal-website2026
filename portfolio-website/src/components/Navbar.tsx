@@ -2,8 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const basePath = "/personal-website2026";
 
 interface NavbarProps {
   className?: string;
@@ -21,6 +25,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
     { id: "experience", label: "Experience" },
     { id: "projects", label: "Projects" },
     { id: "contact", label: "Contact" },
+    
   ];
 
   // Handle scroll events to update navbar appearance
@@ -98,8 +103,18 @@ export default function Navbar({ className = "" }: NavbarProps) {
           ))}
         </div>
 
-        {/* Spacer for right side to keep nav centered */}
-        <div className="hidden md:block w-32" />
+        {/* Right side: PDF icon */}
+        <div className="hidden md:flex items-center">
+          <a
+            href={`${basePath}/Daniel_A_Wang_Resume.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-4 flex items-center hover:text-blue-400 transition-colors"
+            aria-label="Resume"
+          >
+            <FontAwesomeIcon icon={faFilePdf} className="w-6 h-6" />
+          </a>
+        </div>
 
         {/* Mobile Menu Button */}
         <button
