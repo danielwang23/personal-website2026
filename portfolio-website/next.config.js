@@ -1,13 +1,15 @@
 /** @type {import('next').NextConfig} */
 
+const isGithubPages = process.env.NEXT_PUBLIC_GITHUB_PAGES === 'true';
+
 const repo = "personal-website2026";
-const assetPrefix = `/${repo}/`;
-const basePath = `/${repo}`;
+const assetPrefix = isGithubPages ? `/${repo}/` : '';
+const basePath = isGithubPages ? `/${repo}` : '';
 
 const nextConfig = {
     output: 'export',
-    basePath: '/personal-website2026',
-    assetPrefix: '/personal-website2026/',
+    basePath,
+    assetPrefix,
     images: {
         unoptimized: true,
     },
