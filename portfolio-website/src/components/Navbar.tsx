@@ -106,7 +106,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
         {/* Right side: PDF icon */}
         <div className="hidden md:flex items-center">
           <a
-            href={`${basePath}/Daniel_A_Wang_Resume.pdf`}
+            href={`/Daniel_A_Wang_Resume.pdf`}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-4 flex items-center hover:text-blue-400 transition-colors"
