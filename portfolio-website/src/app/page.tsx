@@ -373,11 +373,11 @@ export default function Home() {
 
 
   const interests = [
-    { name: "Photography", icon: `${basePath}/hobbies/cam-logo2.png`, link: "https://www.instagram.com/danielwangphotography/", type: "image", size: "w-12 h-12" },
+    { name: "Photography", icon: `${basePath}/hobbies/cam-logo2.png`, link: "https://www.instagram.com/danielwangfilm/", type: "image", size: "w-12 h-12" },
     { name: "Guitar", icon: `${basePath}/hobbies/guitar.png`, type: "image", size: "w-10 h-10" },
     { name: "Tennis", icon: `${basePath}/hobbies/utrlogo.png`, link: "https://app.utrsports.net/profiles/838346", type: "image", size: "w-10 h-10" },
     { name: "Running", icon: `${basePath}/hobbies/strava.png`, link: "https://www.strava.com/activities/14222755631/overview", type: "image", size: "w-8 h-8" },
-    { name: "Travel Vlogging", icon: `${basePath}/hobbies/yt-logo.webp`, link: "https://www.youtube.com/@DanielWang6", type: "image", size: "w-8 h-8" },
+    { name: "Travel Vlogging", icon: `${basePath}/hobbies/yt-logo.webp`, link: "https://www.youtube.com/@DanielWangders", type: "image", size: "w-8 h-8" },
   ];
 
   // =========EXPERIENCES=======================================
@@ -390,13 +390,39 @@ export default function Home() {
       period: "Aug 2023 - May 2027",
       description:
         "Rising Junior at UNC Chapel Hill.",
+      logo: `${basePath}/company-logos/unc.png`,
+    },
+    {
+      type: "education",
+      institution: "National University of Singapore",
+      role: "Spring 2026 Exchange Student",
+      period: "January 2026 - May 2026",
+      description:
+        "Spring 2026 Exhange Student in Singapore",
+      logo: `${basePath}/company-logos/NUS-blue.jpg`,
+    },
+    {
+      type: "work",
+      institution: "Bank of America",
+      role: " Software Engineering Intern",
+      period: "June 2026 - Aug 2026",
+      description: "Employee Experience Technology",
+      logo: `${basePath}/company-logos/BofA.png`,
+    },
+    {
+      type: "work",
+      institution: "ADHD Neurofeedback UNC Lab",
+      role: "AI Research Assistant",
+      period: "Aug 2025 - Jan 2026",
+      description: "Developed Deep Learning models to analyze EEG data for ADHD diagnosis and categorization under Dr. Campbell.",
+      logo: `${basePath}/company-logos/unc.png`,
     },
     {
       type: "work",
       institution: "Fidelity Investments",
       role: "Full Stack Software Engineering Intern",
       period: "June 2025 - Aug 2025",
-      description: "Developed a SWIFT banking message simulator for Fidelity's Agency Lending team",
+      description: "Developed a SWIFT banking message simulator for Fidelity Agency Lending and Institutaional Trading team.",
       logo: `${basePath}/company-logos/fidelity.png`,
     },
     {
@@ -412,7 +438,7 @@ export default function Home() {
       institution: "App Team Carolina",
       role: "IOS Apprentice Programmer",
       period: "Aug 2024 - Dec 2024",
-      description: "Applying mobile development practices in Swift/SwiftUI for user design, debugging, and code optimization",
+      description: "Applied mobile development practices in Swift/SwiftUI for user design, debugging, and code optimization",
       logo: `${basePath}/company-logos/appteam.jpeg`,
     },
     {
@@ -674,13 +700,13 @@ export default function Home() {
                {isMobile ? (
                  <>
                    <p className="text-base sm:text-lg mb-6">
-                     Hi! My name is Daniel Wang and I am currently a Junior at UNC Chapel Hill 
+                     Hi! My name is Daniel Wang and I am a student at UNC Chapel Hill 
                      double majoring in Computer Science and Data Science.
                    </p>
                    <p className="text-base sm:text-lg mb-6">
                      I enjoy tackling complex problems and turning the data surrounding us into
-                     actionable insights that drive impactful change. I am excited to expand on my skills in
-                     leveraging ML/NLP in software development and data analytics, as well as understand 
+                     insights that drive impactful change. I am excited to expand on my skills in
+                     leveraging AI/ML in software development and data analytics, as well as understand 
                      financial risk management through data. 
                    </p>
                    <p className="text-base sm:text-lg mb-6">
@@ -699,7 +725,7 @@ export default function Home() {
                      transition={{ delay: 0.1 }}
                      className="text-lg mb-6"
                    >
-                     Hi! My name is Daniel Wang and I am currently a Junior at UNC Chapel Hill 
+                     Hi! My name is Daniel Wang and I am currently a student at UNC Chapel Hill
                      double majoring in Computer Science and Data Science.
                    </motion.p>
                    <motion.p
@@ -710,10 +736,12 @@ export default function Home() {
                      transition={{ delay: 0.2 }}
                      className="text-lg mb-6"
                    >
-                     I enjoy tackling complex problems and turning the data surrounding us into
-                     actionable insights that drive impactful change. I am excited to expand on my skills in
-                     leveraging ML/NLP in software development and data analytics, as well as understand 
-                     financial risk management through data. 
+                     I enjoy tackling messy problems and challenging myself to solve where most would avoid. 
+                     I see software development as a way to uncover hidden patterns and design solutions that utilize data to drive informed decisions. 
+                     Right now, my focus is on integrating AI/ML with core software architecture and data pipelines. 
+                     I'm especially interested in building resilient, scalable infrastructure and versatile technology 
+                     that operates in adapting tech ecosystems.
+
                    </motion.p>
                    <motion.p
                      ref={ref3}
@@ -724,8 +752,8 @@ export default function Home() {
                      className="text-lg mb-6"
                    >
                      To me, data visualization is like photography—using the right lens and composition 
-                     to transform raw data into captivating stories. In my free time, I enjoy tennis, 
-                     traveling, playing guitar, photography, and social & outdoor activities. 
+                     to transform raw data into captivating stories. In my free time, I enjoy playing tennis, 
+                     traveling across Asia, listening to R&B, and exploring film and photography.
                    </motion.p>
                  </>
                )}
@@ -940,8 +968,8 @@ export default function Home() {
               {educationExperiences.map((exp, idx) => (
                 <div key={idx} className={workTimelineStyles['education-card'] + " flex items-center"}>
                   <img
-                    src={`${basePath}/company-logos/unc.png`}
-                    alt="UNC Logo"
+                    src={exp.logo}
+                    alt={`${exp.institution} logo`}
                     className="w-12 h-12 rounded-lg mr-4"
                     style={{ objectFit: 'contain' }}
                   />
